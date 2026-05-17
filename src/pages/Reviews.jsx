@@ -1,100 +1,85 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-const fadeUp = { hidden:{ opacity:0, y:24 }, show:{ opacity:1, y:0 } }
+const REVIEWS = [
+  { name:'Marcus T.',    loc:'Summerlin',        rating:5, text:'Corwin has been cleaning my pool for 4 years. Never missed a visit, always immaculate. My neighbor hired them after seeing how great mine looks.',        service:'Weekly Maintenance', date:'Jan 2024' },
+  { name:'Diane R.',     loc:'Henderson',        rating:5, text:'Green pool emergency — they showed up same day and had it crystal clear in 48 hours. I have been with them ever since. Best pool service in Vegas.',    service:'Green Pool Rescue',  date:'Feb 2024' },
+  { name:'Tom & Lisa W.',loc:'Centennial Hills', rating:5, text:'Fast, professional, and actually shows up. We had three other companies ghost us. Corwin has been reliable for 2 years straight. Worth every penny.',   service:'Weekly Maintenance', date:'Mar 2024' },
+  { name:'Sandra K.',    loc:'Spring Valley',    rating:5, text:'My pump broke during a heat wave. They diagnosed and fixed it the same day. Prices were fair and the tech explained everything clearly.',                 service:'Equipment Repair',   date:'Apr 2024' },
+  { name:'James P.',     loc:'Summerlin',        rating:5, text:'Pool looks better than it ever has. The team is friendly, punctual, and thorough. I actually got a personal call from Marcus to check in. That is rare.', service:'Weekly Maintenance', date:'May 2024' },
+  { name:'Rosa M.',      loc:'Enterprise',       rating:5, text:'Moved into a house with a neglected pool. They turned it around in one week. Responsive, professional, and a great value for the service level.',         service:'Deep Clean',         date:'Jun 2024' },
+]
 
-const reviews = [
-  { name:'Marcus T.',    loc:'Summerlin, NV',         stars:5, date:'March 2024',    service:'Weekly Maintenance', text:'Corwin has been cleaning my pool for over 4 years now. Never missed a single visit. Always leaves it crystal clear and leaves a note about the chemical levels. My neighbors constantly ask who does my pool.' },
-  { name:'Diane R.',     loc:'Henderson, NV',         stars:5, date:'February 2024', service:'Green Pool Rescue',  text:"I had a massive green pool emergency right before a family gathering. Called Corwin and they came out the same day. Within 48 hours my pool was completely clear. They also set me up with weekly service — best pool service in Vegas, no contest." },
-  { name:'Tom & Lisa W.',loc:'Centennial Hills, NV',  stars:5, date:'January 2024',  service:'Weekly Maintenance', text:"We tried three other pool companies before Corwin. One ghosted us after two visits. Corwin has shown up every single week for going on 2.5 years. Reliable, professional, and the pool looks amazing year-round." },
-  { name:'Sandra M.',    loc:'Green Valley, NV',      stars:5, date:'December 2023', service:'Equipment Repair',   text:"Our pump died mid-summer. Corwin came for a free diagnosis and had a new pump installed by the next morning. Price was fair and they explained everything clearly." },
-  { name:'Robert K.',    loc:'Summerlin, NV',         stars:5, date:'November 2023', service:'One-Time Deep Clean', text:"Bought a house with a pool that hadn't been maintained in months. Corwin did a deep clean — the pool looked brand new. They gave an honest assessment without trying to upsell on anything unnecessary." },
-  { name:'Jennifer P.',  loc:'Southern Highlands, NV',stars:5, date:'October 2023',  service:'Weekly Maintenance', text:"Best of Las Vegas winner for a reason. Mike comes every Monday without fail. My pool is always perfect. I have a saltwater pool which some companies struggle with but Corwin handles it flawlessly." },
-  { name:'David L.',     loc:'North Las Vegas, NV',   stars:5, date:'September 2023',service:'Tile Cleaning',      text:"Had terrible calcium buildup on my tiles. Corwin came in and made them look brand new in one visit. They were careful, efficient, and didn't damage my plaster. Hired them for weekly service after." },
-  { name:'Karen B.',     loc:'Henderson, NV',         stars:5, date:'August 2023',   service:'Leak Detection',     text:"Water level kept dropping and I had no idea why. Corwin found a slow leak in my skimmer within an hour. Fixed it same day. They saved me from a potentially massive repair bill." },
-  { name:'Frank E.',     loc:'Las Vegas, NV',         stars:5, date:'July 2023',     service:'Weekly Maintenance', text:"I've been a Corwin customer since 2012. In 12+ years they have never let me down. Price is fair, service is impeccable, and the team is always courteous. I refer everyone I know to Corwin." },
+const PLATFORMS = [
+  { name:'Google', rating:'4.9', reviews:'124', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg> },
+  { name:'Yelp',   rating:'4.8', reviews:'87',  icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="m4.93 4.93 14.14 14.14"/></svg> },
+  { name:'BBB',    rating:'A+',  reviews:'Accredited', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> },
 ]
 
 export default function Reviews() {
   return (
-    <div style={{ background:'var(--nm-bg)' }}>
+    <div style={{ background: 'var(--bg)' }}>
 
-      <section style={{ background:'var(--nm-alt)' }} className="section-pad">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div variants={fadeUp} initial="hidden" animate="show">
-            <p className="nm-label mb-4">What Clients Say</p>
-            <h1 className="nm-heading text-5xl md:text-6xl mb-4">Reviews</h1>
-            <div className="flex justify-center gap-1 mb-3">
-              {[...Array(5)].map((_,i) => <span key={i} className="text-3xl" style={{ color:'#f59e0b' }}>★</span>)}
-            </div>
-            <p className="nm-body text-lg">Rated 4.9/5 across 295+ reviews on Google, Yelp, and HomeAdvisor.</p>
-          </motion.div>
+      {/* Hero */}
+      <section style={{ background: 'var(--alt)', padding: '4rem 0' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <span className="label" style={{ display: 'inline-block', marginBottom: '0.75rem' }}>Customer Reviews</span>
+          <h1 style={{ fontSize: 'clamp(2rem,4vw,3rem)', fontWeight: 700, color: 'var(--ink)', marginBottom: '0.5rem' }}>What Our Customers Say</h1>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem', marginTop: '0.75rem' }}>
+            {[...Array(5)].map((_,i) => <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="var(--orange)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>)}
+            <span style={{ marginLeft: '0.5rem', fontWeight: 700, color: 'var(--ink)', fontSize: '1.125rem' }}>5.0</span>
+            <span className="muted" style={{ fontSize: '0.875rem' }}>· 200+ reviews</span>
+          </div>
         </div>
       </section>
 
       {/* Platform stats */}
-      <section style={{ background:'var(--nm-bg)' }} className="py-12">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-3 gap-5">
-            {[{p:'Google',r:'4.9',c:'120+'},{p:'Yelp',r:'4.8',c:'95+'},{p:'HomeAdvisor',r:'4.9',c:'80+'}].map(({ p,r,c },i) => (
-              <motion.div key={p} initial={{ opacity:0, scale:0.95 }} whileInView={{ opacity:1, scale:1 }} viewport={{ once:true }} transition={{ delay:i*0.1 }}
-                className="nm-card p-5 text-center">
-                <div className="text-3xl font-extrabold mb-1" style={{ color:'var(--nm-blue)' }}>{r}</div>
-                <div className="flex justify-center gap-0.5 mb-1">
-                  {[...Array(5)].map((_,j) => <span key={j} className="text-sm" style={{ color:'#f59e0b' }}>★</span>)}
-                </div>
-                <div className="font-semibold text-xs uppercase tracking-wide" style={{ color:'var(--nm-navy)' }}>{p}</div>
-                <div className="text-xs mt-0.5" style={{ color:'var(--nm-muted)' }}>{c} reviews</div>
-              </motion.div>
+      <section style={{ padding: '3rem 0' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.25rem', maxWidth: '42rem', margin: '0 auto' }}>
+            {PLATFORMS.map(({ name, rating, reviews, icon }) => (
+              <div key={name} className="card" style={{ padding: '1.5rem', textAlign: 'center' }}>
+                <div className="icon-wrap" style={{ margin: '0 auto 0.75rem' }}>{icon}</div>
+                <p style={{ fontWeight: 700, fontSize: '1.5rem', color: 'var(--orange)', lineHeight: 1 }}>{rating}</p>
+                <p style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--ink)', marginTop: '0.2rem' }}>{name}</p>
+                <p style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>{reviews}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Reviews grid */}
-      <section style={{ background:'var(--nm-alt)' }} className="section-pad">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map(({ name, loc, stars, date, service, text }, i) => (
-              <motion.div key={name} initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:i*0.05 }}
-                className="nm-card p-6 hover:shadow-nm-lg transition-all duration-300">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex gap-0.5">
-                    {[...Array(stars)].map((_,j) => <span key={j} className="text-lg" style={{ color:'#f59e0b' }}>★</span>)}
-                  </div>
-                  <span className="text-xs" style={{ color:'var(--nm-faint)' }}>{date}</span>
+      <section style={{ background: 'var(--alt)', padding: '5rem 0' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1.25rem' }}>
+            {REVIEWS.map(({ name, loc, rating, text, service, date }) => (
+              <div key={name} className="card" style={{ padding: '1.75rem' }}>
+                <div style={{ display: 'flex', gap: '0.2rem', marginBottom: '0.875rem' }}>
+                  {[...Array(rating)].map((_,i) => <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill="var(--orange)" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>)}
                 </div>
-                <p className="text-sm nm-body italic mb-4 leading-relaxed">"{text}"</p>
-                <div className="nm-divider mb-3"/>
-                <div className="font-semibold text-sm" style={{ color:'var(--nm-navy)' }}>{name}</div>
-                <div className="text-xs mt-0.5" style={{ color:'var(--nm-muted)' }}>{loc}</div>
-                <span className="mt-2 inline-block text-xs font-medium px-2.5 py-1 rounded-full"
-                  style={{ background:'rgba(0,180,216,0.1)', color:'var(--nm-teal)' }}>{service}</span>
-              </motion.div>
+                <p style={{ fontSize: '0.9rem', color: 'var(--body)', lineHeight: 1.65, marginBottom: '1.25rem' }}>{text}</p>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.75rem' }}>
+                  <div>
+                    <p style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--ink)' }}>{name}</p>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{loc} · {date}</p>
+                  </div>
+                  <span className="chip chip-teal" style={{ fontSize: '0.7rem', flexShrink: 0 }}>{service}</span>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section style={{ background:'var(--nm-blue)' }} className="section-pad">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once:true }}>
-            <h2 className="font-extrabold text-4xl text-white mb-4">Share Your Experience</h2>
-            <p className="text-lg mb-8" style={{ color:'rgba(255,255,255,0.75)' }}>Your review helps other Las Vegas families find trusted pool service.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://www.google.com/search?q=corwin+pool+service+las+vegas" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 font-semibold px-7 py-3.5 rounded-xl text-white transition-all hover:opacity-90"
-                style={{ background:'rgba(255,255,255,0.15)', boxShadow:'0 4px 16px rgba(0,0,0,0.15)' }}>
-                ⭐ Leave a Google Review
-              </a>
-              <Link to="/book" className="inline-flex items-center justify-center gap-2 font-semibold px-7 py-3.5 rounded-xl text-white transition-all hover:opacity-90"
-                style={{ background:'rgba(255,255,255,0.15)', boxShadow:'0 4px 16px rgba(0,0,0,0.15)' }}>
-                Book a Service →
-              </Link>
-            </div>
-          </motion.div>
+      {/* CTA */}
+      <section style={{ background: 'var(--blue)', padding: '4.5rem 0' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 700, color: '#fff', marginBottom: '0.75rem' }}>Join 500+ Happy Customers</h2>
+          <p style={{ color: 'rgba(255,255,255,0.65)', marginBottom: '2rem' }}>Book your first service and see why Las Vegas trusts Corwin.</p>
+          <Link to="/book" className="btn" style={{ background: 'var(--orange)', color: '#fff', boxShadow: 'none' }}>Book a Service</Link>
         </div>
       </section>
+
     </div>
   )
 }

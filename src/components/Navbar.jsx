@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
 
-const navLinks = [
+const links = [
   { to: '/',         label: 'Home'     },
   { to: '/services', label: 'Services' },
   { to: '/about',    label: 'About'    },
@@ -16,126 +15,108 @@ export default function Navbar() {
   const location               = useLocation()
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', fn)
+    const fn = () => setScrolled(window.scrollY > 12)
+    window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [])
   useEffect(() => setOpen(false), [location])
 
-  return (
-    <>
-      {/* Top strip */}
-      <div style={{ background: 'var(--nm-navy)' }}
-        className="text-white text-xs font-medium text-center py-2 px-4 tracking-wide">
-        <span style={{ color: 'rgba(255,255,255,0.65)' }}>Best of Las Vegas Gold Winner 2023</span>
-        <span className="mx-3" style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
-        <span style={{ color: 'rgba(255,255,255,0.65)' }}>Serving Vegas Since 2000</span>
-        <span className="mx-3" style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
-        <a href="tel:7024602406" style={{ color: 'var(--nm-sky)' }}
-          className="font-semibold hover:text-white transition-colors">702-460-2406</a>
-      </div>
+  const active = (to) => location.pathname === to
 
-      {/* Main nav */}
-      <nav className="sticky top-0 z-50 transition-all duration-300"
-        style={{
-          background: 'var(--nm-bg)',
-          boxShadow: scrolled ? '0 4px 20px rgba(184,204,216,0.8)' : '0 2px 12px rgba(184,204,216,0.5)',
-        }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+  return (
+    <header
+      className="sticky top-0 z-50 transition-all duration-300"
+      style={{
+        background: 'var(--bg)',
+        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.06)' : 'none',
+        borderBottom: scrolled ? 'none' : '1px solid rgba(192,204,216,0.4)',
+      }}
+    >
+      <div className="container">
+        <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
-            <img
-              src="https://static.wixstatic.com/media/bea8df_fd28c5a1d6304adabc5bf85a6f34e90a~mv2_d_3600_3600_s_4_2.png/v1/crop/x_0,y_446,w_3600,h_2389/fill/w_600,h_400,al_c,q_95,enc_png/Corwin%20Pool%20Main.png"
-              alt="Corwin Pool Service" className="h-11 w-auto" />
+          <Link to="/" className="flex items-center gap-2.5">
+            <img src="/logo.png" alt="Corwin Pool Service" className="h-9 w-auto" onError={e => e.target.style.display='none'} />
+            <span style={{ color: 'var(--ink)', fontWeight: 700, fontSize: '1rem', letterSpacing: '-0.01em' }}>
+              Corwin <span style={{ color: 'var(--blue)', fontWeight: 400 }}>Pool Service</span>
+            </span>
           </Link>
 
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map(({ to, label }) => {
-              const active = location.pathname === to
-              return (
-                <Link key={to} to={to}
-                  className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200"
-                  style={{
-                    color: active ? 'var(--nm-blue)' : 'var(--nm-body)',
-                    background: 'var(--nm-bg)',
-                    boxShadow: active
-                      ? 'inset 3px 3px 6px #b8ccd8, inset -3px -3px 6px #ffffff'
-                      : 'none',
-                    fontWeight: active ? 600 : 400,
-                  }}
-                  onMouseEnter={e => {
-                    if (!active) {
-                      e.currentTarget.style.boxShadow = '4px 4px 9px #b8ccd8, -4px -4px 9px #ffffff'
-                      e.currentTarget.style.color = 'var(--nm-navy)'
-                    }
-                  }}
-                  onMouseLeave={e => {
-                    if (!active) {
-                      e.currentTarget.style.boxShadow = 'none'
-                      e.currentTarget.style.color = 'var(--nm-body)'
-                    }
-                  }}>
-                  {label}
-                </Link>
-              )
-            })}
-          </div>
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {links.map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                style={{
+                  padding: '0.4rem 0.9rem',
+                  borderRadius: '0.5rem',
+                  fontSize: '0.9rem',
+                  fontWeight: active(to) ? 600 : 500,
+                  color: active(to) ? 'var(--blue)' : 'var(--body)',
+                  background: active(to) ? 'var(--bg)' : 'transparent',
+                  boxShadow: active(to) ? 'inset 3px 3px 7px #c0ccd8, inset -3px -3px 7px #ffffff' : 'none',
+                  transition: 'all 0.15s',
+                }}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
 
-          {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-3">
-            <a href="tel:7024602406" className="nm-btn-secondary text-xs py-2 px-4">
-              📞 702-460-2406
+          {/* CTA buttons */}
+          <div className="hidden md:flex items-center gap-2">
+            <a
+              href="tel:7024602406"
+              className="btn btn-ghost"
+              style={{ padding: '0.45rem 1rem', fontSize: '0.875rem' }}
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.59 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              702-460-2406
             </a>
-            <Link to="/book" className="nm-btn-primary text-xs py-2 px-4">Book Free Estimate</Link>
+            <Link to="/book" className="btn btn-primary" style={{ padding: '0.45rem 1.1rem', fontSize: '0.875rem' }}>
+              Book Now
+            </Link>
           </div>
 
-          {/* Hamburger */}
-          <button className="md:hidden p-2 rounded-xl transition-all"
-            style={{ background: 'var(--nm-bg)', boxShadow: 'var(--shadow-nm-sm)' }}
-            onClick={() => setOpen(!open)} aria-label="Toggle menu">
-            <div className={`w-5 h-0.5 transition-all mb-1.5 ${open ? 'rotate-45 translate-y-2' : ''}`}
-              style={{ background: 'var(--nm-navy)' }}/>
-            <div className={`w-5 h-0.5 transition-all ${open ? 'opacity-0' : ''}`}
-              style={{ background: 'var(--nm-navy)' }}/>
-            <div className={`w-5 h-0.5 transition-all mt-1.5 ${open ? '-rotate-45 -translate-y-2' : ''}`}
-              style={{ background: 'var(--nm-navy)' }}/>
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setOpen(o => !o)}
+            className="md:hidden"
+            style={{ width: '2.5rem', height: '2.5rem', borderRadius: '0.625rem', background: 'var(--bg)', boxShadow: 'var(--sh-sm)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px', border: 'none', cursor: 'pointer' }}
+            aria-label="Menu"
+          >
+            <span style={{ width: '18px', height: '2px', background: open ? 'var(--blue)' : 'var(--body)', borderRadius: '1px', transition: 'all 0.2s', transform: open ? 'rotate(45deg) translateY(7px)' : 'none' }} />
+            <span style={{ width: '18px', height: '2px', background: 'var(--body)', borderRadius: '1px', opacity: open ? 0 : 1, transition: 'all 0.2s' }} />
+            <span style={{ width: '18px', height: '2px', background: open ? 'var(--blue)' : 'var(--body)', borderRadius: '1px', transition: 'all 0.2s', transform: open ? 'rotate(-45deg) translateY(-7px)' : 'none' }} />
           </button>
         </div>
+      </div>
 
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {open && (
-            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}
-              style={{ background: 'var(--nm-alt)', borderTop: '1px solid var(--nm-dark)' }}
-              className="md:hidden overflow-hidden">
-              <div className="px-4 py-4 flex flex-col gap-2">
-                {navLinks.map(({ to, label }) => (
-                  <Link key={to} to={to}
-                    className="px-4 py-3 rounded-xl font-medium text-sm text-center transition-all"
-                    style={{
-                      color: location.pathname === to ? 'var(--nm-blue)' : 'var(--nm-body)',
-                      boxShadow: location.pathname === to
-                        ? 'inset 3px 3px 6px #b8ccd8, inset -3px -3px 6px #ffffff'
-                        : '4px 4px 9px #b8ccd8, -4px -4px 9px #ffffff',
-                      background: 'var(--nm-bg)',
-                    }}>
-                    {label}
-                  </Link>
-                ))}
-                <a href="tel:7024602406" className="nm-btn-secondary justify-center mt-1 py-2.5">
-                  📞 702-460-2406
-                </a>
-                <Link to="/book" className="nm-btn-primary justify-center py-2.5">
-                  Book Free Estimate
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
-    </>
+      {/* Mobile menu */}
+      {open && (
+        <div style={{ background: 'var(--bg)', borderTop: '1px solid rgba(192,204,216,0.4)', padding: '1rem 1.5rem 1.5rem' }}>
+          {links.map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              style={{ display: 'block', padding: '0.65rem 0.75rem', borderRadius: '0.625rem', fontWeight: active(to) ? 600 : 500, color: active(to) ? 'var(--blue)' : 'var(--body)', marginBottom: '0.25rem', background: active(to) ? 'var(--bg)' : 'transparent', boxShadow: active(to) ? 'inset 3px 3px 7px #c0ccd8, inset -3px -3px 7px #ffffff' : 'none' }}
+            >
+              {label}
+            </Link>
+          ))}
+          <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <a href="tel:7024602406" className="btn btn-ghost" style={{ width: '100%' }}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.59 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              702-460-2406
+            </a>
+            <Link to="/book" className="btn btn-primary" style={{ width: '100%' }}>Book Now</Link>
+          </div>
+        </div>
+      )}
+    </header>
   )
 }

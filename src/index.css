@@ -2,286 +2,249 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════════════════════════
-   CORWIN POOL SERVICE — NEUMORPHIC DESIGN SYSTEM
-   Base: #e8f2f7  |  Shadow dark: #b8ccd8  |  Shadow light: #fff
-   Primary: #0077b6  |  Text: #0d2a3d
-═══════════════════════════════════════════════════════════════ */
-
 :root {
-  --nm-bg:      #e8f2f7;
-  --nm-alt:     #f0f7fb;
-  --nm-dark:    #b8ccd8;
-  --nm-light:   #ffffff;
-  --nm-blue:    #0077b6;
-  --nm-teal:    #00b4d8;
-  --nm-sky:     #90e0ef;
-  --nm-navy:    #0d2a3d;
-  --nm-body:    #3d6070;
-  --nm-muted:   #7a9fb0;
-  --nm-faint:   #b0c8d4;
-  --nm-footer:  #0d2a3d;
+  --bg:     #e8eff4;
+  --alt:    #f2f6f9;
+  --dark:   #c0ccd8;
+  --white:  #ffffff;
+  --blue:   #0077b6;
+  --orange: #f0820f;
+  --teal:   #009fb5;
+  --ink:    #0c2640;
+  --body:   #375570;
+  --muted:  #6b92a8;
+  --faint:  #b4c8d8;
 
-  --shadow-nm:         7px 7px 15px #b8ccd8, -7px -7px 15px #ffffff;
-  --shadow-nm-sm:      4px 4px 9px  #b8ccd8, -4px  -4px  9px #ffffff;
-  --shadow-nm-lg:      12px 12px 24px #b8ccd8, -12px -12px 24px #ffffff;
-  --shadow-nm-xl:      18px 18px 36px #aac0cc, -18px -18px 36px #ffffff;
-  --shadow-inset:      inset 5px 5px 10px #b8ccd8, inset -5px -5px 10px #ffffff;
-  --shadow-inset-sm:   inset 3px 3px 6px  #b8ccd8, inset -3px  -3px  6px #ffffff;
-  --shadow-inset-lg:   inset 7px 7px 15px #aac0cc, inset -7px -7px 15px #ffffff;
+  --sh:    6px 6px 14px #c0ccd8, -6px -6px 14px #ffffff;
+  --sh-sm: 3px 3px 8px #c0ccd8, -3px -3px 8px #ffffff;
+  --sh-lg: 10px 10px 22px #b8c8d5, -10px -10px 22px #ffffff;
+  --sh-in: inset 4px 4px 9px #c0ccd8, inset -4px -4px 9px #ffffff;
+  --sh-in-sm: inset 2px 2px 5px #c0ccd8, inset -2px -2px 5px #ffffff;
 }
 
-/* ── Base ─────────────────────────────────────────────────── */
 @layer base {
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    background-color: var(--nm-bg);
-    color: var(--nm-body);
-    font-family: 'DM Sans', Inter, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--body);
+    font-family: 'DM Sans', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3, h4, h5, h6 {
-    color: var(--nm-navy);
-    font-family: 'DM Sans', Inter, system-ui, sans-serif;
+  h1,h2,h3,h4,h5,h6 {
+    color: var(--ink);
+    font-family: 'DM Sans', system-ui, sans-serif;
     font-weight: 700;
     line-height: 1.15;
   }
+  a { text-decoration: none; }
+  input, textarea, select { font-family: inherit; }
 }
 
-/* ── Components ───────────────────────────────────────────── */
 @layer components {
 
-  /* ── Cards (raised) ── */
-  .nm-card {
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm);
+  /* ─── Cards ──────────────────────────────────── */
+  .card {
+    background: var(--bg);
+    box-shadow: var(--sh);
     border-radius: 1.25rem;
   }
-  .nm-card-sm {
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm-sm);
-    border-radius: 0.875rem;
+  .card-sm {
+    background: var(--bg);
+    box-shadow: var(--sh-sm);
+    border-radius: 1rem;
   }
-  .nm-card-lg {
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm-lg);
-    border-radius: 1.75rem;
+  .card-lg {
+    background: var(--bg);
+    box-shadow: var(--sh-lg);
+    border-radius: 1.5rem;
   }
-  .nm-card-xl {
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm-xl);
-    border-radius: 2rem;
-  }
-  /* Flat panel — same bg, subtle shadow for depth on alt sections */
-  .nm-panel {
-    background: var(--nm-alt);
-    box-shadow: var(--shadow-nm-sm);
+  .card-alt {
+    background: var(--alt);
+    box-shadow: var(--sh);
     border-radius: 1.25rem;
   }
-
-  /* ── Inset / pressed ── */
-  .nm-inset {
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-inset);
-    border-radius: 0.875rem;
+  .inset {
+    background: var(--bg);
+    box-shadow: var(--sh-in);
+    border-radius: 1rem;
   }
-  .nm-inset-sm {
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-inset-sm);
-    border-radius: 0.625rem;
-  }
-  .nm-inset-lg {
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-inset-lg);
-    border-radius: 1.25rem;
-  }
-
-  /* ── Buttons ── */
-
-  /* Primary CTA — filled blue, colored shadow */
-  .nm-btn-primary {
-    @apply inline-flex items-center justify-center gap-2 font-semibold text-sm
-           cursor-pointer transition-all duration-200 text-white tracking-wide;
-    background: var(--nm-blue);
-    box-shadow: 5px 5px 12px #005f94, -3px -3px 8px rgba(0,180,216,0.35);
-    border-radius: 0.875rem;
-    padding: 0.75rem 1.75rem;
-    border: none;
-    text-decoration: none;
-  }
-  .nm-btn-primary:hover {
-    background: #006aa3;
-    box-shadow: 7px 7px 16px #004d75, -4px -4px 10px rgba(0,180,216,0.4);
-    transform: translateY(-1px);
-  }
-  .nm-btn-primary:active {
-    transform: translateY(0);
-    box-shadow: inset 3px 3px 8px #004d75, inset -2px -2px 6px rgba(0,180,216,0.3);
-  }
-
-  /* Secondary — raised, blue text */
-  .nm-btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 font-semibold text-sm
-           cursor-pointer transition-all duration-200 tracking-wide;
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm-sm);
-    border-radius: 0.875rem;
-    padding: 0.75rem 1.75rem;
-    border: none;
-    color: var(--nm-blue);
-    text-decoration: none;
-  }
-  .nm-btn-secondary:hover {
-    box-shadow: var(--shadow-nm);
-    color: var(--nm-navy);
-    transform: translateY(-1px);
-  }
-  .nm-btn-secondary:active {
-    box-shadow: var(--shadow-inset-sm);
-    transform: translateY(0);
-  }
-
-  /* Ghost / outline — inset, blue text */
-  .nm-btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 font-semibold text-sm
-           cursor-pointer transition-all duration-200 tracking-wide;
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-inset-sm);
-    border-radius: 0.875rem;
-    padding: 0.75rem 1.75rem;
-    border: none;
-    color: var(--nm-muted);
-    text-decoration: none;
-  }
-  .nm-btn-ghost:hover {
-    box-shadow: var(--shadow-nm-sm);
-    color: var(--nm-blue);
-  }
-
-  /* ── Form inputs (inset = carved into the surface) ── */
-  .nm-input {
-    @apply w-full font-body px-4 py-3 transition-all duration-150
-           outline-none text-sm;
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-inset-sm);
+  .inset-sm {
+    background: var(--bg);
+    box-shadow: var(--sh-in-sm);
     border-radius: 0.75rem;
-    border: 1.5px solid transparent;
-    color: var(--nm-navy);
+  }
+
+  /* ─── Buttons ─────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.625rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
     font-family: inherit;
   }
-  .nm-input::placeholder { color: var(--nm-faint); }
-  .nm-input:focus {
-    border-color: var(--nm-teal);
-    box-shadow: var(--shadow-inset-sm), 0 0 0 3px rgba(0,180,216,0.08);
+  .btn:active { transform: scale(0.98); }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    box-shadow: 4px 4px 10px rgba(240,130,15,0.30), -2px -2px 6px #ffffff;
+  }
+  .btn-primary:hover { background: #e07708; }
+
+  .btn-blue {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: 4px 4px 10px rgba(0,119,182,0.28), -2px -2px 6px #ffffff;
+  }
+  .btn-blue:hover { background: #005f94; }
+
+  .btn-ghost {
+    background: var(--bg);
+    color: var(--blue);
+    box-shadow: var(--sh-sm);
+  }
+  .btn-ghost:hover { box-shadow: var(--sh); }
+
+  .btn-inset {
+    background: var(--bg);
+    color: var(--muted);
+    box-shadow: var(--sh-in-sm);
+  }
+  .btn-inset.active {
+    color: var(--blue);
+    box-shadow: var(--sh-in);
+  }
+
+  /* ─── Form fields ─────────────────────────────── */
+  .field {
+    width: 100%;
+    background: var(--bg);
+    box-shadow: var(--sh-in);
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--ink);
+    font-size: 0.9375rem;
     outline: none;
+    transition: box-shadow 0.2s;
   }
-  .nm-select {
-    @apply nm-input appearance-none cursor-pointer;
-  }
-  .nm-select option { background: var(--nm-bg); color: var(--nm-navy); }
+  .field::placeholder { color: var(--muted); }
+  .field:focus { box-shadow: var(--sh-in), 0 0 0 2px rgba(0,119,182,0.18); }
 
-  /* ── Typography helpers ── */
-  .nm-label {
-    @apply text-xs font-semibold tracking-widest2 uppercase;
-    color: var(--nm-teal);
+  /* ─── Typography helpers ──────────────────────── */
+  .label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--orange);
   }
-  .nm-heading {
-    color: var(--nm-navy);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 800;
-    line-height: 1.1;
-  }
-  .nm-heading-xl {
-    @apply nm-heading text-4xl md:text-5xl lg:text-6xl;
-  }
-  .nm-heading-lg {
-    @apply nm-heading text-3xl md:text-4xl;
-  }
-  .nm-heading-md {
-    @apply nm-heading text-2xl md:text-3xl;
-  }
-  .nm-body {
-    color: var(--nm-body);
-    line-height: 1.7;
-  }
-  .nm-muted {
-    color: var(--nm-muted);
-  }
+  .heading { color: var(--ink); font-weight: 700; }
+  .subtext { color: var(--body); }
+  .muted   { color: var(--muted); }
 
-  /* ── Section padding ── */
-  .section-pad { @apply py-20 md:py-28; }
-
-  /* ── Badge ── */
-  .nm-badge {
-    @apply inline-flex items-center gap-1.5 text-xs font-semibold tracking-wide px-3 py-1.5;
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm-sm);
-    border-radius: 2rem;
-    color: var(--nm-blue);
-  }
-  .nm-badge-teal {
-    @apply nm-badge;
-    color: var(--nm-teal);
-  }
-
-  /* ── Divider ── */
-  .nm-divider {
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--nm-dark), transparent);
-    opacity: 0.5;
-  }
-
-  /* ── Trust chip ── */
-  .nm-chip {
-    @apply inline-flex items-center gap-2 text-sm font-medium;
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-inset-sm);
-    border-radius: 0.625rem;
-    padding: 0.5rem 0.875rem;
-    color: var(--nm-body);
-  }
-
-  /* ── Icon circle ── */
-  .nm-icon {
-    @apply flex items-center justify-center flex-shrink-0;
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm-sm);
-    border-radius: 50%;
+  /* ─── Icon container ──────────────────────────── */
+  .icon-wrap {
     width: 3rem;
     height: 3rem;
+    border-radius: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    box-shadow: var(--sh-sm);
+    color: var(--blue);
+    flex-shrink: 0;
   }
-  .nm-icon-lg {
-    @apply nm-icon;
+  .icon-wrap-lg {
     width: 4rem;
     height: 4rem;
+    border-radius: 1.125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    box-shadow: var(--sh);
+    color: var(--blue);
+    flex-shrink: 0;
   }
-}
+  .icon-wrap-orange {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    box-shadow: var(--sh-sm);
+    color: var(--orange);
+    flex-shrink: 0;
+  }
 
-/* ── Scrollbar ─────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 7px; }
-::-webkit-scrollbar-track { background: var(--nm-bg); }
-::-webkit-scrollbar-thumb { background: var(--nm-dark); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--nm-muted); }
+  /* ─── Badge / chip ────────────────────────────── */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--bg);
+    box-shadow: var(--sh-sm);
+    color: var(--body);
+  }
+  .chip-blue  { color: var(--blue); }
+  .chip-orange { color: var(--orange); }
+  .chip-teal  { color: var(--teal); }
+  .chip-green { color: #2d8a4e; }
+  .chip-red   { color: #b83232; }
+  .chip-gray  { color: var(--muted); }
 
-/* ── Ticker ─────────────────────────────────────────────────── */
-@keyframes ticker {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.ticker-animate { animation: ticker 28s linear infinite; }
+  /* ─── Status dot badge (admin) ────────────────── */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: var(--bg);
+    box-shadow: var(--sh-in-sm);
+    text-transform: capitalize;
+  }
+  .status-new       { color: var(--blue); }
+  .status-contacted { color: var(--orange); }
+  .status-qualified { color: var(--teal); }
+  .status-converted { color: #2d8a4e; }
+  .status-lost      { color: #b83232; }
+  .status-scheduled { color: var(--blue); }
+  .status-completed { color: #2d8a4e; }
+  .status-cancelled { color: var(--muted); }
+  .status-no-show   { color: #b83232; }
+  .status-active    { color: #2d8a4e; }
+  .status-inactive  { color: var(--muted); }
+  .status-vip       { color: var(--teal); }
 
-/* ── Subtle float ─────────────────────────────────────────── */
-@keyframes nm-float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-5px); }
-}
-.nm-float { animation: nm-float 5s ease-in-out infinite; }
+  /* ─── Section helpers ─────────────────────────── */
+  .section { padding: 5rem 0; }
+  .section-sm { padding: 3rem 0; }
+  .container { max-width: 75rem; margin: 0 auto; padding: 0 1.5rem; }
 
-/* ── Shimmer on blue button ────────────────────────────────── */
-@keyframes nm-shimmer {
-  0%   { opacity: 0.6; }
-  50%  { opacity: 1; }
-  100% { opacity: 0.6; }
+  /* ─── Divider ─────────────────────────────────── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--dark), transparent);
+    opacity: 0.5;
+  }
 }

@@ -2,86 +2,54 @@ import { Link } from 'react-router-dom'
 
 export default function Footer() {
   return (
-    <footer style={{ background: 'var(--nm-footer)', color: 'rgba(255,255,255,0.75)' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+    <footer style={{ background: 'var(--ink)', padding: '4rem 0 2rem' }}>
+      <div className="container">
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.5fr', gap: '3rem', marginBottom: '3rem' }}>
 
-          {/* Brand */}
-          <div className="md:col-span-1">
-            <img
-              src="https://static.wixstatic.com/media/bea8df_fd28c5a1d6304adabc5bf85a6f34e90a~mv2_d_3600_3600_s_4_2.png/v1/crop/x_0,y_446,w_3600,h_2389/fill/w_600,h_400,al_c,q_95,enc_png/Corwin%20Pool%20Main.png"
-              alt="Corwin Pool Service" className="h-12 w-auto mb-4"
-              style={{ filter: 'brightness(0) invert(1) opacity(0.85)' }} />
-            <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
-              Las Vegas's most trusted pool cleaning &amp; maintenance service since 2000. Award-winning. Family-owned.
+          <div>
+            <p style={{ fontWeight: 700, fontSize: '1.125rem', color: '#fff', marginBottom: '0.75rem' }}>
+              Corwin <span style={{ color: 'var(--teal)', fontWeight: 400 }}>Pool Service</span>
             </p>
-            <div className="flex gap-3 mt-5">
-              {[['Y','https://www.yelp.com/biz/corwin-pool-service-las-vegas'],
-                ['G','https://www.google.com'],['f','https://www.facebook.com']].map(([l,h]) => (
-                <a key={l} href={h} target="_blank" rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold transition-all hover:text-white"
-                  style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.6)' }}>
-                  {l}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <p className="text-white font-semibold text-sm mb-5 tracking-wide">Navigation</p>
-            <ul className="space-y-2.5 text-sm">
-              {[['/', 'Home'],['/services','Services'],['/about','About Us'],
-                ['/reviews','Reviews'],['/contact','Contact'],['/book','Book Online']].map(([t,l]) => (
-                <li key={t}>
-                  <Link to={t} className="hover:text-white transition-colors"
-                    style={{ color: 'rgba(255,255,255,0.55)' }}>{l}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <p className="text-white font-semibold text-sm mb-5 tracking-wide">Services</p>
-            <ul className="space-y-2.5 text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>
-              {['Weekly Maintenance','Green Pool Rescue','Equipment Repair',
-                'Tile & Surface Cleaning','Leak Detection','One-Time Deep Clean',
-                'Chemical Balancing','Pool Opening / Closing'].map(s => <li key={s}>{s}</li>)}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <p className="text-white font-semibold text-sm mb-5 tracking-wide">Contact</p>
-            <div className="space-y-4 text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>
-              <div>📍 10917 Salford Drive<br />Las Vegas, NV 89144</div>
-              <div><a href="tel:7024602406" className="text-white font-semibold hover:text-[#90e0ef] transition-colors">📞 702-460-2406</a></div>
-              <div><a href="mailto:info@corwinpools.com" className="hover:text-white transition-colors">✉️ info@corwinpools.com</a></div>
-              <div>Mon–Fri 7am–6pm · Sat 8am–4pm</div>
-            </div>
-            <a href="tel:7024602406"
-              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white px-4 py-2.5 rounded-xl transition-all hover:opacity-90"
-              style={{ background: 'var(--nm-blue)', boxShadow: '3px 3px 8px rgba(0,0,0,0.3)' }}>
-              Get a Free Estimate
+            <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, marginBottom: '1.25rem', maxWidth: '22rem' }}>
+              Las Vegas pool cleaning and maintenance since 2000. Serving Summerlin, Henderson, and Centennial Hills.
+            </p>
+            <a href="tel:7024602406" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: '#fff', fontWeight: 600, fontSize: '1rem' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.59 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              702-460-2406
             </a>
           </div>
+
+          <div>
+            <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1rem' }}>Services</p>
+            {['Weekly Maintenance','Green Pool Rescue','Equipment Repair','Deep Clean','Leak Detection'].map(s => (
+              <Link key={s} to="/services" style={{ display: 'block', fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem' }}>{s}</Link>
+            ))}
+          </div>
+
+          <div>
+            <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1rem' }}>Company</p>
+            {[['About Us','/about'],['Reviews','/reviews'],['Contact','/contact'],['Book Online','/book']].map(([l,t]) => (
+              <Link key={l} to={t} style={{ display: 'block', fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.5rem' }}>{l}</Link>
+            ))}
+          </div>
+
+          <div>
+            <p style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: '1rem' }}>Service Areas</p>
+            {['Summerlin','Henderson','Centennial Hills','North Las Vegas','Spring Valley','Enterprise'].map(a => (
+              <p key={a} style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', marginBottom: '0.4rem' }}>{a}</p>
+            ))}
+          </div>
+
         </div>
 
-        {/* Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.35)' }}>
-          <div>© {new Date().getFullYear()} Corwin Pool Service LLC. All rights reserved.</div>
-          <div className="flex items-center gap-3">
-            <span className="px-3 py-1 rounded-full text-xs font-medium"
-              style={{ background: 'rgba(0,119,182,0.2)', color: 'var(--nm-sky)' }}>
-              NV Lic. #C-53-12345
-            </span>
-            <span>Licensed · Bonded · Insured</span>
-          </div>
-          <div className="flex gap-4">
-            <Link to="/contact" className="hover:text-white transition-colors">Privacy</Link>
-            <Link to="/contact" className="hover:text-white transition-colors">Terms</Link>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+          <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.3)' }}>
+            &copy; {new Date().getFullYear()} Corwin Pool Service. All rights reserved. NV License #C-53-12345.
+          </p>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {['Licensed & Insured','Best of LV 2023','Since 2000'].map(t => (
+              <span key={t} style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.05)', padding: '0.2rem 0.65rem', borderRadius: '99px' }}>{t}</span>
+            ))}
           </div>
         </div>
       </div>

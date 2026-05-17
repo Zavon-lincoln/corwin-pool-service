@@ -1,347 +1,261 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
 import { mockAvailability, SERVICES } from '../lib/mockData'
 
-const STEPS = ['Service', 'Date & Time', 'Contact Info', 'Confirm']
-const slideVariants = {
-  enter: (dir) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
-  center: { x: 0, opacity: 1 },
-  exit: (dir) => ({ x: dir > 0 ? -60 : 60, opacity: 0 }),
-}
+const STEPS = ['Service','Date & Time','Your Info','Confirm']
+
+const ChevronRight = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+)
+const ChevronLeft = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+)
+const Check = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+)
 
 export default function Book() {
-  const [step, setStep] = useState(0)
-  const [dir, setDir] = useState(1)
+  const [step, setStep]         = useState(0)
   const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [appointmentId, setAppointmentId] = useState(null)
-  const [booking, setBooking] = useState({ service:'', date:'', time:'', slotId:'', name:'', phone:'', email:'', address:'', notes:'' })
-  const update = (key, val) => setBooking(b => ({ ...b, [key]: val }))
-  const next = () => { setDir(1); setStep(s => Math.min(s + 1, 3)) }
-  const back = () => { setDir(-1); setStep(s => Math.max(s - 1, 0)) }
-  const availability = mockAvailability
-  const dates = [...new Set(availability.map(s => s.slot_date))].sort()
-  const slotsForDate = (date) => availability.filter(s => s.slot_date === date && !s.is_booked)
-  const formatDate = (d) => new Date(d + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
-  const formatTime = (t) => { const [h] = t.split(':'); const hr = parseInt(h); return hr < 12 ? `${hr}:00 AM` : hr === 12 ? '12:00 PM' : `${hr - 12}:00 PM` }
+  const [loading, setLoading]   = useState(false)
+  const [apptId, setApptId]     = useState(null)
+  const [booking, setBooking]   = useState({ service:'', date:'', time:'', slotId:'', name:'', phone:'', email:'', address:'', notes:'' })
+  const upd = (k, v) => setBooking(b => ({ ...b, [k]: v }))
+  const next = () => setStep(s => Math.min(s + 1, 3))
+  const back = () => setStep(s => Math.max(s - 1, 0))
+
+  const slots    = mockAvailability
+  const dates    = [...new Set(slots.map(s => s.slot_date))].sort()
+  const forDate  = d => slots.filter(s => s.slot_date === d && !s.is_booked)
+  const fmtDate  = d => new Date(d + 'T00:00:00').toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' })
+  const fmtTime  = t => { const h = parseInt(t.split(':')[0]); return h < 12 ? `${h}:00 AM` : h === 12 ? '12:00 PM' : `${h-12}:00 PM` }
 
   const handleSubmit = async () => {
     setLoading(true)
     try {
       if (isSupabaseConfigured()) {
-        const { data: leadData } = await supabase.from('leads').insert([{ name: booking.name, phone: booking.phone, email: booking.email, service_type: booking.service, source: 'booking', status: 'new' }]).select().single()
-        const scheduledAt = new Date(booking.date + 'T' + booking.time).toISOString()
-        const { data: apptData } = await supabase.from('appointments').insert([{ lead_id: leadData?.id, service_type: booking.service, scheduled_at: scheduledAt, status: 'scheduled', notes: booking.notes }]).select().single()
+        const { data: lead } = await supabase.from('leads').insert([{ name: booking.name, phone: booking.phone, email: booking.email, service_type: booking.service, source: 'booking', status: 'new' }]).select().single()
+        const at = new Date(booking.date + 'T' + booking.time).toISOString()
+        const { data: appt } = await supabase.from('appointments').insert([{ lead_id: lead?.id, service_type: booking.service, scheduled_at: at, status: 'scheduled', notes: booking.notes }]).select().single()
         if (booking.slotId) await supabase.from('availability').update({ is_booked: true }).eq('id', booking.slotId)
-        setAppointmentId(apptData?.id?.substring(0, 8).toUpperCase())
+        setApptId(appt?.id?.substring(0, 8).toUpperCase())
       } else {
-        await new Promise(r => setTimeout(r, 1500))
-        setAppointmentId('CPS-' + Math.random().toString(36).substring(2, 7).toUpperCase())
+        await new Promise(r => setTimeout(r, 1200))
+        setApptId('CPS-' + Math.random().toString(36).substring(2, 7).toUpperCase())
       }
       setSubmitted(true)
-    } catch (err) { console.error('Booking error:', err) }
+    } catch (e) { console.error(e) }
     finally { setLoading(false) }
   }
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[var(--nm-bg)] flex items-center justify-center px-4 py-16">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="nm-card max-w-lg w-full p-10 text-center"
-        >
-          <div className="nm-icon-lg mx-auto mb-6">
-            <svg className="w-8 h-8 text-[var(--nm-blue)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
+      <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem 1.5rem' }}>
+        <div className="card-lg" style={{ maxWidth: '28rem', width: '100%', padding: '3rem', textAlign: 'center' }}>
+          <div className="icon-wrap-lg" style={{ margin: '0 auto 1.25rem', background: 'var(--bg)', color: '#2d8a4e' }}>
+            <Check size={28} />
           </div>
-          <h2 className="font-display text-3xl text-[var(--nm-navy)] mb-2 font-bold">Booking Confirmed!</h2>
-          <div className="nm-inset inline-block px-5 py-2 rounded-xl mb-5">
-            <span className="nm-label">Confirmation #{appointmentId}</span>
+          <h2 style={{ fontWeight: 700, fontSize: '1.5rem', color: 'var(--ink)', marginBottom: '0.5rem' }}>Booking Confirmed!</h2>
+          <div className="inset-sm" style={{ display: 'inline-block', padding: '0.3rem 1rem', borderRadius: '0.5rem', marginBottom: '1.25rem' }}>
+            <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--blue)' }}>Confirmation #{apptId}</span>
           </div>
-          <p className="nm-heading text-lg mb-1">{booking.service}</p>
-          <p className="nm-body mb-1">📅 {formatDate(booking.date)}</p>
-          <p className="nm-body mb-6">⏰ {formatTime(booking.time)}</p>
-          <div className="nm-inset p-5 text-sm text-left mb-6 rounded-xl">
-            <p className="font-semibold text-[var(--nm-navy)] mb-3">What happens next:</p>
-            <ul className="space-y-2 nm-body">
-              <li className="flex items-start gap-2">
-                <span className="text-[var(--nm-teal)] mt-0.5">✉</span>
-                <span>Confirmation email sent to {booking.email || 'you'}</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[var(--nm-teal)] mt-0.5">📞</span>
-                <span>We will call within 2 hours to confirm your appointment</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-[var(--nm-teal)] mt-0.5">🔔</span>
-                <span>Reminder sent 24 hrs before your appointment</span>
-              </li>
-            </ul>
+          <p style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--ink)', marginBottom: '0.25rem' }}>{booking.service}</p>
+          <p style={{ color: 'var(--body)', fontSize: '0.9rem' }}>{fmtDate(booking.date)} &middot; {fmtTime(booking.time)}</p>
+          <div className="inset" style={{ padding: '1.25rem', borderRadius: '1rem', margin: '1.5rem 0', textAlign: 'left' }}>
+            <p style={{ fontWeight: 600, color: 'var(--ink)', fontSize: '0.875rem', marginBottom: '0.75rem' }}>What happens next:</p>
+            {['Confirmation email sent to you','We will call within 2 hours to confirm','Reminder sent 24 hrs before your appointment'].map(t => (
+              <div key={t} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginTop: '0.2rem', flexShrink: 0 }}><polyline points="20 6 9 17 4 12"/></svg>
+                <span style={{ fontSize: '0.8375rem', color: 'var(--body)' }}>{t}</span>
+              </div>
+            ))}
           </div>
-          <a href="tel:7024602406" className="nm-btn-primary w-full justify-center inline-flex">
-            📞 Call Us: 702-460-2406
-          </a>
-        </motion.div>
+          <a href="tel:7024602406" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Call 702-460-2406</a>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="bg-[var(--nm-bg)] min-h-screen">
-      {/* Hero */}
-      <section className="py-16 bg-[var(--nm-alt)]">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <span className="nm-label inline-block mb-3">Online Booking</span>
-          <h1 className="nm-heading text-4xl sm:text-5xl mb-3">Book a Service</h1>
-          <p className="nm-muted">4 simple steps. Takes less than 2 minutes.</p>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+
+      {/* Header */}
+      <section style={{ background: 'var(--alt)', padding: '3rem 0 0' }}>
+        <div className="container" style={{ textAlign: 'center', paddingBottom: '1.5rem' }}>
+          <span className="label" style={{ display: 'inline-block', marginBottom: '0.5rem' }}>Online Booking</span>
+          <h1 style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--ink)' }}>Book a Service</h1>
+        </div>
+
+        {/* Step bar */}
+        <div style={{ borderTop: '1px solid rgba(192,204,216,0.4)' }}>
+          <div className="container" style={{ padding: '1.25rem 1.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              {STEPS.map((label, i) => (
+                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: i < STEPS.length - 1 ? '1' : 'none' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+                    <div
+                      style={{
+                        width: '2rem', height: '2rem', borderRadius: '0.625rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8125rem', fontWeight: 700, transition: 'all 0.2s',
+                        ...(i < step
+                          ? { background: 'var(--teal)', color: '#fff', boxShadow: '3px 3px 7px #c0ccd8, -1px -1px 4px #fff' }
+                          : i === step
+                          ? { background: 'var(--blue)', color: '#fff', boxShadow: '4px 4px 9px #c0ccd8, -2px -2px 5px #fff' }
+                          : { background: 'var(--bg)', color: 'var(--faint)', boxShadow: 'inset 3px 3px 6px #c0ccd8, inset -3px -3px 6px #fff' })
+                      }}
+                    >
+                      {i < step ? <Check size={13} /> : i + 1}
+                    </div>
+                    <span style={{ fontSize: '0.8125rem', fontWeight: i === step ? 600 : 400, color: i === step ? 'var(--ink)' : i < step ? 'var(--teal)' : 'var(--faint)', display: 'none', ...(window.innerWidth > 640 ? { display: 'block' } : {}) }}>{label}</span>
+                  </div>
+                  {i < STEPS.length - 1 && (
+                    <div style={{ flex: 1, height: '1px', background: i < step ? 'var(--teal)' : 'var(--dark)', opacity: 0.4, borderRadius: '1px', margin: '0 0.25rem' }} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Step Progress */}
-      <div className="bg-[var(--nm-alt)] border-b border-[var(--nm-dark)]/10">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6">
-          <div className="flex items-center justify-between">
-            {STEPS.map((label, i) => (
-              <div key={label} className="flex items-center gap-2">
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold transition-all duration-300"
-                  style={
-                    i < step
-                      ? { background: 'var(--nm-teal)', color: '#fff', boxShadow: '3px 3px 8px var(--nm-dark), -1px -1px 4px #fff' }
-                      : i === step
-                      ? { background: 'var(--nm-blue)', color: '#fff', boxShadow: '4px 4px 10px var(--nm-dark), -2px -2px 6px #fff' }
-                      : { background: 'var(--nm-bg)', boxShadow: 'inset 3px 3px 7px var(--nm-dark), inset -3px -3px 7px #fff', color: 'var(--nm-faint)' }
-                  }
-                >
-                  {i < step ? '✓' : i + 1}
-                </div>
-                <span className={`hidden sm:block text-xs font-semibold uppercase tracking-wider transition-colors ${i === step ? 'text-[var(--nm-navy)]' : i < step ? 'text-[var(--nm-teal)]' : 'text-[var(--nm-faint)]'}`}>
-                  {label}
-                </span>
-                {i < STEPS.length - 1 && (
-                  <div
-                    className="hidden sm:block h-0.5 w-8 mx-2 rounded-full transition-all"
-                    style={{ background: i < step ? 'var(--nm-teal)' : 'var(--nm-dark)', opacity: i < step ? 0.6 : 0.25 }}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* Step content */}
+      <div style={{ padding: '3rem 0 5rem' }}>
+        <div className="container" style={{ maxWidth: '42rem' }}>
 
-      {/* Step Content */}
-      <div className="py-12 sm:py-16">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <AnimatePresence custom={dir} mode="wait">
-            <motion.div key={step} custom={dir} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.3 }}>
-
-              {/* STEP 0: Service */}
-              {step === 0 && (
-                <div>
-                  <h2 className="nm-heading text-2xl sm:text-3xl mb-1">What service do you need?</h2>
-                  <p className="nm-muted mb-7">Select the service that best matches your needs.</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {SERVICES.slice(0, -1).map(s => {
-                      const selected = booking.service === s
-                      return (
-                        <button
-                          key={s}
-                          onClick={() => update('service', s)}
-                          className="p-4 text-left flex items-center gap-3 rounded-xl transition-all duration-200 w-full"
-                          style={
-                            selected
-                              ? { boxShadow: 'inset 4px 4px 9px var(--nm-dark), inset -4px -4px 9px #fff', background: 'var(--nm-bg)' }
-                              : { boxShadow: '5px 5px 12px var(--nm-dark), -5px -5px 12px #fff', background: 'var(--nm-bg)' }
-                          }
-                        >
-                          <div
-                            className="w-5 h-5 rounded-md flex-shrink-0 flex items-center justify-center transition-all"
-                            style={
-                              selected
-                                ? { background: 'var(--nm-blue)', boxShadow: '2px 2px 5px var(--nm-dark)' }
-                                : { boxShadow: 'inset 2px 2px 5px var(--nm-dark), inset -2px -2px 5px #fff', background: 'var(--nm-bg)' }
-                            }
-                          >
-                            {selected && <span className="text-white text-[10px] font-black leading-none">✓</span>}
-                          </div>
-                          <span className={`font-medium text-sm transition-colors ${selected ? 'text-[var(--nm-blue)] font-semibold' : 'text-[var(--nm-body)]'}`}>{s}</span>
-                        </button>
-                      )
-                    })}
-                  </div>
-                  <div className="mt-8 flex justify-end">
-                    <button onClick={next} disabled={!booking.service} className="nm-btn-primary disabled:opacity-40 disabled:cursor-not-allowed">
-                      Next: Choose Date →
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* STEP 1: Date & Time */}
-              {step === 1 && (
-                <div>
-                  <h2 className="nm-heading text-2xl sm:text-3xl mb-1">Pick a date and time</h2>
-                  <p className="nm-muted mb-7">Available slots for the next 2 weeks.</p>
-                  <div className="space-y-4">
-                    {dates.map(date => {
-                      const slots = slotsForDate(date)
-                      if (slots.length === 0) return null
-                      const dateSelected = booking.date === date
-                      return (
-                        <div
-                          key={date}
-                          className="rounded-xl p-5 transition-all"
-                          style={
-                            dateSelected
-                              ? { boxShadow: 'inset 4px 4px 9px var(--nm-dark), inset -4px -4px 9px #fff', background: 'var(--nm-bg)' }
-                              : { boxShadow: '5px 5px 12px var(--nm-dark), -5px -5px 12px #fff', background: 'var(--nm-bg)' }
-                          }
-                        >
-                          <div className="font-semibold text-[var(--nm-navy)] mb-3 text-sm">{formatDate(date)}</div>
-                          <div className="flex flex-wrap gap-2">
-                            {slots.map(slot => {
-                              const slotActive = booking.date === date && booking.time === slot.slot_time
-                              return (
-                                <button
-                                  key={slot.id}
-                                  onClick={() => { update('date', date); update('time', slot.slot_time); update('slotId', slot.id) }}
-                                  className="px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200"
-                                  style={
-                                    slotActive
-                                      ? { background: 'var(--nm-blue)', color: '#fff', boxShadow: '3px 3px 7px var(--nm-dark)' }
-                                      : { background: 'var(--nm-bg)', color: 'var(--nm-blue)', boxShadow: '3px 3px 7px var(--nm-dark), -3px -3px 7px #fff' }
-                                  }
-                                >
-                                  {formatTime(slot.slot_time)}
-                                </button>
-                              )
-                            })}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                  <div className="mt-8 flex justify-between">
-                    <button onClick={back} className="nm-btn-secondary">← Back</button>
-                    <button onClick={next} disabled={!booking.date || !booking.time} className="nm-btn-primary disabled:opacity-40 disabled:cursor-not-allowed">
-                      Next: Contact Info →
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* STEP 2: Contact Info */}
-              {step === 2 && (
-                <div>
-                  <h2 className="nm-heading text-2xl sm:text-3xl mb-1">Your contact info</h2>
-                  <p className="nm-muted mb-7">We will confirm your appointment and send a reminder.</p>
-                  <div className="nm-card p-6 sm:p-8 space-y-5">
-                    {[
-                      ['Full Name *', 'name', 'text', 'John Smith'],
-                      ['Phone Number *', 'phone', 'tel', '702-555-0100'],
-                      ['Email Address', 'email', 'email', 'you@email.com'],
-                      ['Property Address', 'address', 'text', '1234 Desert Rose Dr, Las Vegas NV'],
-                    ].map(([label, key, type, placeholder]) => (
-                      <div key={key}>
-                        <label className="nm-label block mb-2">{label}</label>
-                        <input
-                          type={type}
-                          value={booking[key]}
-                          onChange={e => update(key, e.target.value)}
-                          placeholder={placeholder}
-                          className="nm-input w-full"
-                        />
+          {/* Step 0: Service */}
+          {step === 0 && (
+            <div>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '0.375rem' }}>What service do you need?</h2>
+              <p style={{ color: 'var(--muted)', marginBottom: '1.75rem', fontSize: '0.9rem' }}>Select the service that best fits your situation.</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.875rem' }}>
+                {SERVICES.slice(0, -1).map(s => {
+                  const sel = booking.service === s
+                  return (
+                    <button key={s} onClick={() => upd('service', s)}
+                      style={{ padding: '1rem 1.125rem', borderRadius: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', border: 'none', textAlign: 'left', transition: 'box-shadow 0.15s', background: 'var(--bg)',
+                        boxShadow: sel ? 'inset 4px 4px 9px #c0ccd8, inset -4px -4px 9px #ffffff' : '5px 5px 12px #c0ccd8, -5px -5px 12px #ffffff' }}>
+                      <div style={{ width: '1.25rem', height: '1.25rem', borderRadius: '0.375rem', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s',
+                        background: sel ? 'var(--blue)' : 'var(--bg)', boxShadow: sel ? '2px 2px 5px #c0ccd8' : 'inset 2px 2px 5px #c0ccd8, inset -2px -2px 5px #fff' }}>
+                        {sel && <Check size={10} />}
                       </div>
-                    ))}
-                    <div>
-                      <label className="nm-label block mb-2">Additional Notes (Optional)</label>
-                      <textarea
-                        value={booking.notes}
-                        onChange={e => update('notes', e.target.value)}
-                        placeholder="Gate code, specific issues, pool type..."
-                        rows={3}
-                        className="nm-input w-full resize-none"
-                      />
-                    </div>
-                  </div>
-                  <div className="mt-8 flex justify-between">
-                    <button onClick={back} className="nm-btn-secondary">← Back</button>
-                    <button onClick={next} disabled={!booking.name || !booking.phone} className="nm-btn-primary disabled:opacity-40 disabled:cursor-not-allowed">
-                      Review Booking →
+                      <span style={{ fontSize: '0.875rem', fontWeight: sel ? 600 : 500, color: sel ? 'var(--blue)' : 'var(--body)' }}>{s}</span>
                     </button>
-                  </div>
-                </div>
-              )}
+                  )
+                })}
+              </div>
+              <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end' }}>
+                <button onClick={next} disabled={!booking.service} className="btn btn-primary" style={{ opacity: booking.service ? 1 : 0.45 }}>
+                  Next <ChevronRight />
+                </button>
+              </div>
+            </div>
+          )}
 
-              {/* STEP 3: Confirm */}
-              {step === 3 && (
-                <div>
-                  <h2 className="nm-heading text-2xl sm:text-3xl mb-1">Confirm your booking</h2>
-                  <p className="nm-muted mb-7">Review your details before confirming.</p>
-                  <div className="nm-card p-6 sm:p-8 mb-5">
-                    <div className="space-y-0">
-                      {[
-                        ['Service', booking.service],
-                        ['Date', formatDate(booking.date)],
-                        ['Time', formatTime(booking.time)],
-                        ['Name', booking.name],
-                        ['Phone', booking.phone],
-                        ['Email', booking.email || 'Not provided'],
-                        ['Address', booking.address || 'Not provided'],
-                      ].map(([label, value], idx, arr) => (
-                        <div
-                          key={label}
-                          className={`flex justify-between items-start py-3 ${idx < arr.length - 1 ? 'border-b border-[var(--nm-dark)]/15' : ''}`}
-                        >
-                          <span className="nm-label">{label}</span>
-                          <span className="text-sm font-semibold text-[var(--nm-navy)] text-right max-w-xs">{value}</span>
-                        </div>
-                      ))}
+          {/* Step 1: Date & Time */}
+          {step === 1 && (
+            <div>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '0.375rem' }}>Pick a date and time</h2>
+              <p style={{ color: 'var(--muted)', marginBottom: '1.75rem', fontSize: '0.9rem' }}>Available slots for the next 2 weeks.</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
+                {dates.map(date => {
+                  const available = forDate(date)
+                  if (!available.length) return null
+                  const isDateSel = booking.date === date
+                  return (
+                    <div key={date} style={{ borderRadius: '1rem', padding: '1.25rem', background: 'var(--bg)', boxShadow: isDateSel ? 'inset 4px 4px 9px #c0ccd8, inset -4px -4px 9px #fff' : '5px 5px 12px #c0ccd8, -5px -5px 12px #fff', transition: 'box-shadow 0.15s' }}>
+                      <p style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--ink)', marginBottom: '0.75rem' }}>{fmtDate(date)}</p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                        {available.map(slot => {
+                          const active = booking.date === date && booking.time === slot.slot_time
+                          return (
+                            <button key={slot.id} onClick={() => { upd('date', date); upd('time', slot.slot_time); upd('slotId', slot.id) }}
+                              style={{ padding: '0.4rem 0.875rem', borderRadius: '0.5rem', fontSize: '0.8375rem', fontWeight: 600, cursor: 'pointer', border: 'none', transition: 'all 0.15s', background: 'var(--bg)',
+                                color: active ? '#fff' : 'var(--blue)',
+                                boxShadow: active ? 'none' : '3px 3px 7px #c0ccd8, -3px -3px 7px #fff',
+                                backgroundColor: active ? 'var(--blue)' : undefined }}>
+                              {fmtTime(slot.slot_time)}
+                            </button>
+                          )
+                        })}
+                      </div>
                     </div>
-                  </div>
-                  <div className="nm-inset p-4 mb-7 flex items-start gap-3 rounded-xl">
-                    <div className="nm-icon flex-shrink-0">
-                      <svg className="w-4 h-4 text-[var(--nm-blue)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                      </svg>
+                  )
+                })}
+              </div>
+              <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'space-between' }}>
+                <button onClick={back} className="btn btn-ghost"><ChevronLeft /> Back</button>
+                <button onClick={next} disabled={!booking.date || !booking.time} className="btn btn-primary" style={{ opacity: booking.date && booking.time ? 1 : 0.45 }}>Next <ChevronRight /></button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 2: Contact */}
+          {step === 2 && (
+            <div>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '0.375rem' }}>Your contact info</h2>
+              <p style={{ color: 'var(--muted)', marginBottom: '1.75rem', fontSize: '0.9rem' }}>We will confirm your appointment and send a reminder.</p>
+              <div className="card" style={{ padding: '2rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+                  {[['Full Name *','name','text','John Smith'],['Phone *','phone','tel','702-555-0100']].map(([l,k,t,p]) => (
+                    <div key={k}>
+                      <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.4rem' }}>{l}</label>
+                      <input type={t} value={booking[k]} onChange={e => upd(k, e.target.value)} placeholder={p} className="field" />
                     </div>
-                    <p className="nm-body text-sm">
-                      <strong className="text-[var(--nm-navy)]">Licensed and Insured.</strong> NV Contractor License #C-53-12345. You will receive a confirmation email and a call within 2 hours.
-                    </p>
-                  </div>
-                  <div className="flex justify-between">
-                    <button onClick={back} className="nm-btn-secondary">← Edit</button>
-                    <button
-                      onClick={handleSubmit}
-                      disabled={loading}
-                      className="nm-btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
-                    >
-                      {loading ? (
-                        <span className="flex items-center gap-2">
-                          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                          </svg>
-                          Booking...
-                        </span>
-                      ) : (
-                        <span className="flex items-center gap-2">
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                          Confirm Booking
-                        </span>
-                      )}
-                    </button>
-                  </div>
+                  ))}
                 </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
+                {[['Email Address','email','email','you@email.com'],['Property Address','address','text','1234 Desert Rose Dr, Las Vegas NV']].map(([l,k,t,p]) => (
+                  <div key={k} style={{ marginBottom: '1rem' }}>
+                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.4rem' }}>{l}</label>
+                    <input type={t} value={booking[k]} onChange={e => upd(k, e.target.value)} placeholder={p} className="field" />
+                  </div>
+                ))}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.4rem' }}>Notes (Optional)</label>
+                  <textarea value={booking.notes} onChange={e => upd('notes', e.target.value)} placeholder="Gate code, pool type, specific issues..." rows={3} className="field" style={{ resize: 'none' }} />
+                </div>
+              </div>
+              <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'space-between' }}>
+                <button onClick={back} className="btn btn-ghost"><ChevronLeft /> Back</button>
+                <button onClick={next} disabled={!booking.name || !booking.phone} className="btn btn-primary" style={{ opacity: booking.name && booking.phone ? 1 : 0.45 }}>Review <ChevronRight /></button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Confirm */}
+          {step === 3 && (
+            <div>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '0.375rem' }}>Confirm your booking</h2>
+              <p style={{ color: 'var(--muted)', marginBottom: '1.75rem', fontSize: '0.9rem' }}>Review everything before we lock it in.</p>
+              <div className="card" style={{ padding: '1.75rem', marginBottom: '1rem' }}>
+                {[['Service',booking.service],['Date',fmtDate(booking.date)],['Time',fmtTime(booking.time)],['Name',booking.name],['Phone',booking.phone],['Email',booking.email||'Not provided'],['Address',booking.address||'Not provided']].map(([l,v],i,arr) => (
+                  <div key={l} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '0.7rem 0', borderBottom: i < arr.length-1 ? '1px solid rgba(192,204,216,0.4)' : 'none' }}>
+                    <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--muted)' }}>{l}</span>
+                    <span style={{ fontSize: '0.875rem', fontWeight: 700, color: 'var(--ink)', textAlign: 'right', maxWidth: '60%' }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="inset" style={{ padding: '1rem 1.25rem', borderRadius: '0.875rem', marginBottom: '1.5rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
+                <div className="icon-wrap" style={{ width: '2rem', height: '2rem', borderRadius: '0.5rem', flexShrink: 0 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <p style={{ fontSize: '0.8375rem', color: 'var(--body)', lineHeight: 1.55 }}>
+                  <strong style={{ color: 'var(--ink)' }}>Licensed and Insured.</strong> NV Contractor License #C-53-12345. You will receive a confirmation and a call within 2 hours.
+                </p>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <button onClick={back} className="btn btn-ghost"><ChevronLeft /> Edit</button>
+                <button onClick={handleSubmit} disabled={loading} className="btn btn-primary" style={{ opacity: loading ? 0.7 : 1 }}>
+                  {loading ? (
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <svg style={{ animation: 'spin 1s linear infinite' }} width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" strokeOpacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round"/></svg>
+                      Booking...
+                    </span>
+                  ) : <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}><Check size={15} /> Confirm Booking</span>}
+                </button>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </div>

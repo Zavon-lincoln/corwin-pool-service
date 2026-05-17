@@ -1,153 +1,114 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-const fadeUp = { hidden:{ opacity:0, y:24 }, show:{ opacity:1, y:0 } }
-
-const team = [
-  { name:'Dave Corwin', role:'Owner & Master Technician', since:'2000', bio:"Founded Corwin Pool Service with one truck and a simple promise: show up every week, do it right." },
-  { name:'Mike R.',     role:'Lead Technician',    since:'2010', bio:'Certified Pool Operator (CPO). 14+ years experience. Handles our most complex repairs.' },
-  { name:'Carlos V.',   role:'Senior Pool Tech',   since:'2015', bio:'Manages Summerlin and Centennial routes. Known for thoroughness and never missing a detail.' },
-  { name:'Jose M.',     role:'Pool Technician',    since:'2019', bio:'Henderson and Green Valley routes. Quickly became a customer favorite for his precision.' },
+const TEAM = [
+  { name: 'Marcus Corwin', role: 'Founder & Master Tech', years: '25 yrs', initials: 'MC' },
+  { name: 'Jordan Lee', role: 'Senior Pool Technician', years: '12 yrs', initials: 'JL' },
+  { name: 'Priya Nair', role: 'Operations Manager', years: '8 yrs', initials: 'PN' },
+  { name: 'Darnell Webb', role: 'Equipment Specialist', years: '10 yrs', initials: 'DW' },
 ]
 
-const timeline = [
-  { year:'2000', event:'Corwin Pool Service founded. First 10 clients in Summerlin.' },
-  { year:'2005', event:'Expanded to Henderson and Green Valley. 75+ active clients.' },
-  { year:'2010', event:'Hired first full-time technician. Fleet of 3 trucks.' },
-  { year:'2015', event:'Named HomeAdvisor Top Rated. 200+ clients served.' },
-  { year:'2020', event:'Launched online booking and service tracking.' },
-  { year:'2023', event:'🏆 Best of Las Vegas GOLD Award. 500+ families served.' },
-  { year:'2024', event:'25 years strong. Expanding across all of Clark County.' },
+const TIMELINE = [
+  { year: '2000', event: 'Founded in Las Vegas with 3 residential clients and one truck.' },
+  { year: '2005', event: 'Expanded to commercial properties and HOA communities.' },
+  { year: '2010', event: 'Hired first dedicated equipment repair technician.' },
+  { year: '2018', event: 'Named Best of Las Vegas for the first time.' },
+  { year: '2023', event: 'Over 500 active customers and a fully certified team of specialists.' },
+]
+
+const CERTS = [
+  { label: 'NV Contractor', value: '#C-53-12345', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> },
+  { label: 'CPO Certified', value: 'All Technicians', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg> },
+  { label: 'Fully Insured', value: '$1M Liability', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg> },
+  { label: 'Best of LV', value: 'Gold Winner 2023', icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> },
 ]
 
 export default function About() {
   return (
-    <div style={{ background:'var(--nm-bg)' }}>
+    <div style={{ background: 'var(--bg)' }}>
 
-      <section style={{ background:'var(--nm-alt)' }} className="section-pad">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div variants={fadeUp} initial="hidden" animate="show">
-            <p className="nm-label mb-4">Our Story</p>
-            <h1 className="nm-heading text-5xl md:text-6xl mb-5">About Us</h1>
-            <p className="nm-body text-lg">Family-owned. Award-winning. Las Vegas pool experts since 2000.</p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Story */}
-      <section style={{ background:'var(--nm-bg)' }} className="section-pad">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once:true }}>
-              <p className="nm-label mb-4">Since 2000</p>
-              <h2 className="nm-heading-xl mb-6">25 Years of Crystal Clear Pools</h2>
-              <div className="space-y-4 nm-body">
-                <p>Dave Corwin started this company with one truck, a few hundred dollars in equipment, and a simple promise: show up every week, do it right, and treat every pool like your own.</p>
-                <p>In Las Vegas's brutal desert heat, a clean, chemically balanced pool isn't a luxury — it's a necessity. Algae can take over in 72 hours. A broken pump in 110°F heat means green water by the weekend.</p>
-                <p>We built Corwin around reliability. Our clients don't wonder if we're coming. We come. We've served the same families for 15+ years because we do exactly what we say, every visit.</p>
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity:0, scale:0.97 }} whileInView={{ opacity:1, scale:1 }} viewport={{ once:true }}>
-              <div className="nm-card-xl p-8 text-center nm-float">
-                <div className="text-8xl font-extrabold mb-1" style={{ color:'var(--nm-blue)' }}>25</div>
-                <div className="font-medium text-lg tracking-widest uppercase mb-8" style={{ color:'var(--nm-muted)' }}>Years</div>
-                <div className="grid grid-cols-2 gap-4">
-                  {[['500+','Families Served'],['#1','Best of Las Vegas'],['4','Certified Techs'],['25+','Yrs Experience']].map(([v,l]) => (
-                    <div key={l} className="nm-card-sm p-4 text-center">
-                      <div className="text-2xl font-bold" style={{ color:'var(--nm-blue)' }}>{v}</div>
-                      <div className="text-xs mt-1 font-medium uppercase tracking-wide" style={{ color:'var(--nm-muted)' }}>{l}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
+      {/* Hero */}
+      <section style={{ background: 'var(--alt)', padding: '4rem 0' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <span className="label" style={{ display: 'inline-block', marginBottom: '0.75rem' }}>Our Story</span>
+          <h1 style={{ fontSize: 'clamp(2rem,4vw,3rem)', fontWeight: 700, color: 'var(--ink)', marginBottom: '0.875rem' }}>About Corwin Pool Service</h1>
+          <p className="subtext" style={{ fontSize: '1.0625rem', maxWidth: '36rem', margin: '0 auto' }}>25 years of keeping Las Vegas pools crystal clear, one backyard at a time.</p>
         </div>
       </section>
 
       {/* Credentials */}
-      <section style={{ background:'var(--nm-alt)' }} className="section-pad">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="nm-heading-lg">Licensed · Bonded · Insured</h2>
-            <p className="nm-muted mt-2">Your protection is our priority.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
-            {[['📋','NV License','#C-53-12345','Nevada Pool & Spa Contractor'],['🛡️','Fully Insured','$1M+','General Liability Coverage'],['🎓','Certified','CPO','Certified Pool Operator'],['🏆','Award-Winning','Gold','Best of Las Vegas 2023']].map(([icon,title,detail,sub],i) => (
-              <motion.div key={title} initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:i*0.1 }}
-                className="nm-card p-6 text-center hover:shadow-nm-lg transition-all duration-300">
-                <div className="nm-icon-lg mx-auto mb-3 text-2xl">{icon}</div>
-                <div className="text-2xl font-bold mb-1" style={{ color:'var(--nm-blue)' }}>{detail}</div>
-                <div className="font-semibold text-sm mb-1" style={{ color:'var(--nm-navy)' }}>{title}</div>
-                <div className="text-xs" style={{ color:'var(--nm-muted)' }}>{sub}</div>
-              </motion.div>
+      <section style={{ padding: '4rem 0' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1.25rem' }}>
+            {CERTS.map(({ label, value, icon }) => (
+              <div key={label} className="card" style={{ padding: '1.5rem', textAlign: 'center' }}>
+                <div className="icon-wrap-orange" style={{ margin: '0 auto 0.875rem' }}>{icon}</div>
+                <p style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--ink)', marginBottom: '0.25rem' }}>{label}</p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--muted)' }}>{value}</p>
+              </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Story */}
+      <section style={{ background: 'var(--alt)', padding: '5rem 0' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+            <div>
+              <span className="label" style={{ display: 'inline-block', marginBottom: '0.75rem' }}>Who We Are</span>
+              <h2 style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--ink)', marginBottom: '1rem' }}>Built on Reputation, Not Advertising</h2>
+              <p className="subtext" style={{ lineHeight: 1.75, marginBottom: '1rem' }}>Corwin Pool Service started with a single truck and a handshake promise: show up every week, do the job right, and never cut corners. That is the same promise we make to every customer today.</p>
+              <p className="subtext" style={{ lineHeight: 1.75, marginBottom: '1.5rem' }}>Over 80% of our new customers come from referrals from existing clients. In 25 years, we have never run a single advertisement. Our work speaks for itself.</p>
+              <Link to="/book" className="btn btn-primary">Get a Free Estimate</Link>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
+              {TIMELINE.map(({ year, event }) => (
+                <div key={year} className="card-sm" style={{ padding: '1rem 1.25rem', display: 'flex', gap: '1.25rem', alignItems: 'flex-start' }}>
+                  <div className="inset-sm" style={{ padding: '0.3rem 0.7rem', borderRadius: '0.5rem', flexShrink: 0 }}>
+                    <span style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--blue)' }}>{year}</span>
+                  </div>
+                  <p style={{ fontSize: '0.875rem', color: 'var(--body)', lineHeight: 1.55 }}>{event}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Team */}
-      <section style={{ background:'var(--nm-bg)' }} className="section-pad">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <p className="nm-label mb-3">The People Behind Your Pool</p>
-            <h2 className="nm-heading-lg">Meet the Team</h2>
+      <section style={{ padding: '5rem 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="label" style={{ display: 'inline-block', marginBottom: '0.75rem' }}>The Team</span>
+            <h2 style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--ink)' }}>People Behind Your Pool</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map(({ name, role, since, bio }, i) => (
-              <motion.div key={name} initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:i*0.1 }}
-                className="nm-card p-6 hover:shadow-nm-lg transition-all duration-300">
-                <div className="nm-icon-lg mb-4 text-2xl">👤</div>
-                <div className="font-semibold" style={{ color:'var(--nm-navy)' }}>{name}</div>
-                <div className="text-xs font-semibold mt-0.5 mb-1" style={{ color:'var(--nm-teal)' }}>{role}</div>
-                <div className="text-xs mb-3" style={{ color:'var(--nm-faint)' }}>Since {since}</div>
-                <p className="text-sm nm-body">{bio}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline */}
-      <section style={{ background:'var(--nm-alt)' }} className="section-pad">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12"><h2 className="nm-heading-lg">Our Journey</h2></div>
-          <div>
-            {timeline.map(({ year, event }, i) => (
-              <motion.div key={year} initial={{ opacity:0, x:-20 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ delay:i*0.08 }}
-                className="flex items-start gap-5 mb-2">
-                <div className="flex flex-col items-center flex-shrink-0">
-                  <div className="nm-badge px-3 py-1.5 font-bold w-16 text-center text-xs">{year}</div>
-                  {i < timeline.length-1 && <div className="w-px h-6 mt-1" style={{ background:'var(--nm-dark)' }}/>}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1.25rem' }}>
+            {TEAM.map(({ name, role, years, initials }) => (
+              <div key={name} className="card" style={{ padding: '1.75rem', textAlign: 'center' }}>
+                <div className="icon-wrap-lg" style={{ margin: '0 auto 1rem', background: 'var(--blue)' }}>
+                  <span style={{ color: '#fff', fontWeight: 700, fontSize: '0.9375rem' }}>{initials}</span>
                 </div>
-                <div className="nm-card-sm p-4 flex-1 mb-1">
-                  <p className="text-sm nm-body">{event}</p>
-                </div>
-              </motion.div>
+                <p style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--ink)', marginBottom: '0.25rem' }}>{name}</p>
+                <p style={{ fontSize: '0.825rem', color: 'var(--body)', marginBottom: '0.5rem' }}>{role}</p>
+                <span className="chip chip-orange" style={{ fontSize: '0.7rem' }}>{years} exp.</span>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section style={{ background:'var(--nm-blue)' }} className="section-pad">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once:true }}>
-            <h2 className="font-extrabold text-4xl md:text-5xl text-white mb-4">Work With the Best</h2>
-            <p className="text-lg mb-8" style={{ color:'rgba(255,255,255,0.75)' }}>25 years. 500+ families. Best of Las Vegas.</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/book" className="inline-flex items-center justify-center gap-2 text-base font-semibold px-8 py-4 rounded-xl text-white transition-all hover:opacity-90"
-                style={{ background:'rgba(255,255,255,0.15)', boxShadow:'0 4px 16px rgba(0,0,0,0.15)' }}>
-                Book a Service →
-              </Link>
-              <a href="tel:7024602406" className="inline-flex items-center justify-center gap-2 text-base font-semibold px-8 py-4 rounded-xl text-white transition-all hover:opacity-90"
-                style={{ background:'rgba(255,255,255,0.15)', boxShadow:'0 4px 16px rgba(0,0,0,0.15)' }}>
-                📞 Call Us Now
-              </a>
-            </div>
-          </motion.div>
+      <section style={{ background: 'var(--blue)', padding: '4.5rem 0' }}>
+        <div className="container" style={{ textAlign: 'center' }}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 700, color: '#fff', marginBottom: '0.75rem' }}>Ready to Work With Us?</h2>
+          <p style={{ color: 'rgba(255,255,255,0.65)', marginBottom: '2rem' }}>Book your first service online or give us a call. No pressure, no commitment.</p>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/book" className="btn" style={{ background: 'var(--orange)', color: '#fff', boxShadow: 'none' }}>Book a Service</Link>
+            <a href="tel:7024602406" className="btn" style={{ background: 'rgba(255,255,255,0.15)', color: '#fff', boxShadow: 'none' }}>702-460-2406</a>
+          </div>
         </div>
       </section>
+
     </div>
   )
 }
