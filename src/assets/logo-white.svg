@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
+  <!-- Wave icon - white version -->
+  <g transform="translate(4, 8)">
+    <circle cx="32" cy="32" r="28" fill="white" stroke="white" stroke-width="3"/>
+    <path d="M10 34 Q16 26 22 34 Q28 42 34 34 Q40 26 46 34 Q52 42 54 38"
+          stroke="#004E98" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <path d="M10 40 Q16 32 22 40 Q28 48 34 40 Q40 32 46 40 Q52 48 54 44"
+          stroke="#004E98" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+    <path d="M32 12 Q26 22 26 27 A6 6 0 0 0 38 27 Q38 22 32 12Z" fill="#004E98"/>
+  </g>
+  <!-- Wordmark - white -->
+  <text x="76" y="36" font-family="'Arial Black', 'Impact', sans-serif" font-size="28" font-weight="900" letter-spacing="3" fill="white">CORWIN</text>
+  <text x="77" y="58" font-family="'Arial', sans-serif" font-size="13" font-weight="600" letter-spacing="5" fill="white">POOL SERVICE</text>
+  <!-- Accent line -->
+  <rect x="76" y="41" width="240" height="3" fill="#00C4F0"/>
+</svg>

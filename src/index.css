@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-body bg-brand-cream text-brand-black;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+  /* Neubrutalism card */
+  .neo-card {
+    @apply bg-white border-3 border-brand-black shadow-neo;
+  }
+  .neo-card-blue {
+    @apply bg-brand-blue border-3 border-brand-black shadow-neo text-white;
+  }
+  .neo-card-cyan {
+    @apply bg-brand-cyan border-3 border-brand-black shadow-neo;
+  }
+  .neo-card-yellow {
+    @apply bg-brand-yellow border-3 border-brand-black shadow-neo;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply bg-brand-yellow text-brand-black font-bold border-3 border-brand-black shadow-neo
+           px-6 py-3 uppercase tracking-wider text-sm
+           hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-neo-lg
+           active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+           transition-all duration-150 inline-flex items-center gap-2 cursor-pointer;
+  }
+  .btn-primary-lg {
+    @apply btn-primary text-base px-8 py-4;
+  }
+  .btn-secondary {
+    @apply bg-white text-brand-black font-bold border-3 border-brand-black shadow-neo
+           px-6 py-3 uppercase tracking-wider text-sm
+           hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-neo-lg
+           active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+           transition-all duration-150 inline-flex items-center gap-2 cursor-pointer;
+  }
+  .btn-blue {
+    @apply bg-brand-blue text-white font-bold border-3 border-brand-black shadow-neo
+           px-6 py-3 uppercase tracking-wider text-sm
+           hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-neo-lg
+           active:translate-x-[2px] active:translate-y-[2px] active:shadow-none
+           transition-all duration-150 inline-flex items-center gap-2 cursor-pointer;
+  }
+
+  /* Section headings */
+  .section-label {
+    @apply text-xs font-bold tracking-widest2 uppercase text-brand-cyan;
+  }
+  .section-title {
+    @apply font-display text-5xl md:text-6xl text-brand-black leading-none;
+  }
+  .section-title-white {
+    @apply font-display text-5xl md:text-6xl text-white leading-none;
+  }
+
+  /* Form inputs */
+  .form-input {
+    @apply w-full border-3 border-brand-black bg-white px-4 py-3 font-body text-brand-black
+           placeholder-gray-400 focus:outline-none focus:border-brand-cyan focus:ring-0
+           transition-colors;
+  }
+  .form-select {
+    @apply form-input appearance-none cursor-pointer;
+  }
+
+  /* Section padding */
+  .section-pad {
+    @apply py-20 md:py-28;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #FFFDF5; }
+::-webkit-scrollbar-thumb { background: #004E98; border: 2px solid #FFFDF5; }
+::-webkit-scrollbar-thumb:hover { background: #003570; }
+
+/* Wave animation for hero */
+@keyframes wave-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.wave-animate {
+  animation: wave-slide 8s linear infinite;
+}
+
+/* Ticker animation */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-animate {
+  animation: ticker 20s linear infinite;
+}
