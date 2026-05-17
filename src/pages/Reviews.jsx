@@ -25,9 +25,9 @@ const platformStats = [
 
 export default function Reviews() {
   return (
-    <div style={{ background: '#1a3a6e' }}>
+    <div style={{ background: 'var(--nm-bg)' }}>
       {/* ─── HERO ─── */}
-      <section className="relative overflow-hidden" style={{ background: '#162f5a' }}>
+      <section className="relative overflow-hidden" style={{ background: 'var(--nm-deep)' }}>
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="absolute rounded-full"
@@ -37,14 +37,14 @@ export default function Reviews() {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-24 text-center relative z-10">
           <motion.div initial="hidden" animate="show" variants={fadeUp}>
-            <p className="text-xs font-bold tracking-widest2 uppercase mb-4" style={{ color: '#00C4F0' }}>What Clients Say</p>
+            <p className="text-xs font-bold tracking-widest2 uppercase mb-4" style={{ color: 'var(--nm-cyan)' }}>What Clients Say</p>
             <h1 className="font-display text-7xl md:text-8xl text-white leading-none mb-6">
               REVIEWS
             </h1>
-            <div className="flex justify-center mb-4" style={{ color: '#FFE156', fontSize: '3rem', letterSpacing: '0.1em' }}>
+            <div className="flex justify-center mb-4" style={{ color: 'var(--nm-yellow)', fontSize: '3rem', letterSpacing: '0.1em' }}>
               {'★★★★★'}
             </div>
-            <p className="text-lg" style={{ color: 'rgba(224,238,255,0.65)' }}>
+            <p className="text-lg" style={{ color: 'var(--nm-muted)' }}>
               Rated 4.9/5 across 295+ reviews on Google, Yelp, and HomeAdvisor.
             </p>
           </motion.div>
@@ -52,7 +52,7 @@ export default function Reviews() {
       </section>
 
       {/* ─── PLATFORM STATS ─── */}
-      <section className="py-12" style={{ background: '#1a3a6e' }}>
+      <section className="py-12" style={{ background: 'var(--nm-bg)' }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-3 gap-5">
             {platformStats.map(({ platform, rating, count }, i) => (
@@ -61,12 +61,12 @@ export default function Reviews() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                style={NM_CARD}
+                className="nm-card"
                 className="rounded-2xl p-6 text-center">
                 <div className="font-display text-4xl text-[#00C4F0] mb-1">{rating}</div>
                 <div className="text-yellow-400 text-lg mb-2">★★★★★</div>
                 <div className="font-bold text-white text-xs uppercase tracking-wider">{platform}</div>
-                <div className="text-xs mt-1" style={{ color: 'rgba(224,238,255,0.45)' }}>{count} reviews</div>
+                <div className="text-xs mt-1" style={{ color: 'var(--nm-faint)' }}>{count} reviews</div>
               </motion.div>
             ))}
           </div>
@@ -74,7 +74,7 @@ export default function Reviews() {
       </section>
 
       {/* ─── REVIEWS GRID ─── */}
-      <section className="section-pad" style={{ background: '#162f5a' }}>
+      <section className="section-pad" style={{ background: 'var(--nm-deep)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {reviews.map(({ name, location, stars, date, service, text }, i) => (
@@ -83,18 +83,18 @@ export default function Reviews() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                style={NM_CARD}
+                className="nm-card"
                 className="rounded-2xl p-6 transition-all duration-200 hover:border-[#00C4F0]/30">
                 <div className="flex items-start justify-between mb-3">
                   <div className="text-yellow-400 text-xl">{'★'.repeat(stars)}</div>
-                  <span className="text-xs font-semibold" style={{ color: 'rgba(224,238,255,0.4)' }}>{date}</span>
+                  <span className="text-xs font-semibold" style={{ color: 'var(--nm-faint)' }}>{date}</span>
                 </div>
-                <p className="text-sm leading-relaxed mb-4 italic" style={{ color: 'rgba(224,238,255,0.75)' }}>"{text}"</p>
+                <p className="text-sm leading-relaxed mb-4 italic" style={{ color: 'var(--nm-text)' }}>"{text}"</p>
                 <div className="pt-3" style={{ borderTop: '1px solid rgba(0,196,240,0.2)' }}>
                   <div className="font-black text-white">{name}</div>
-                  <div className="text-xs mt-0.5" style={{ color: 'rgba(224,238,255,0.45)' }}>{location}</div>
+                  <div className="text-xs mt-0.5" style={{ color: 'var(--nm-faint)' }}>{location}</div>
                   <div className="mt-2 inline-block rounded-full px-2 py-0.5 text-xs font-bold"
-                    style={{ background: 'rgba(0,196,240,0.12)', border: '1px solid rgba(0,196,240,0.3)', color: '#00C4F0' }}>
+                    style={{ background: 'rgba(0,196,240,0.12)', border: '1px solid rgba(0,196,240,0.3)', color: 'var(--nm-cyan)' }}>
                     {service}
                   </div>
                 </div>
@@ -105,11 +105,11 @@ export default function Reviews() {
       </section>
 
       {/* ─── LEAVE A REVIEW CTA ─── */}
-      <section className="section-pad" style={{ background: '#0f2440' }}>
+      <section className="section-pad" style={{ background: 'var(--nm-deeper)' }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}>
             <h2 className="font-display text-6xl text-white mb-4">SHARE YOUR EXPERIENCE</h2>
-            <p className="mb-8 text-lg" style={{ color: 'rgba(224,238,255,0.6)' }}>
+            <p className="mb-8 text-lg" style={{ color: 'var(--nm-muted)' }}>
               Are you a Corwin customer? Your review helps other Las Vegas families find trusted pool service.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -129,11 +129,11 @@ export default function Reviews() {
       </section>
 
       {/* ─── BOTTOM CTA ─── */}
-      <section className="section-pad" style={{ background: '#1a3a6e' }}>
+      <section className="section-pad" style={{ background: 'var(--nm-bg)' }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}>
             <h2 className="font-display text-5xl text-white mb-4">READY TO JOIN THE 500+?</h2>
-            <p className="mb-8" style={{ color: 'rgba(224,238,255,0.6)' }}>
+            <p className="mb-8" style={{ color: 'var(--nm-muted)' }}>
               Experience the service that earned 295+ five-star reviews.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -46,17 +46,17 @@ export default function Book() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-nm-bg flex items-center justify-center px-4">
+      <div className="min-h-screen bg-[var(--nm-bg)] flex items-center justify-center px-4">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="nm-card max-w-lg w-full p-10 text-center">
           <div className="text-6xl mb-4">✅</div>
           <h2 className="font-display text-5xl text-[#00C4F0] mb-3 tracking-wider">BOOKED!</h2>
-          <div className="inline-block px-5 py-2 rounded-xl mb-4 font-bold text-nm-dark text-sm" style={{ background: '#FFE156', boxShadow: '4px 4px 10px #0f2440' }}>
+          <div className="inline-block px-5 py-2 rounded-xl mb-4 font-bold text-[var(--nm-dark)] text-sm" style={{ background: '#FFE156', boxShadow: '4px 4px 10px #0f2440' }}>
             Confirmation #{appointmentId}
           </div>
           <p className="text-white font-semibold mb-2">{booking.service}</p>
           <p className="text-white/70 mb-1">📅 {formatDate(booking.date)}</p>
           <p className="text-white/70 mb-6">⏰ {formatTime(booking.time)}</p>
-          <div className="nm-card-inset p-4 text-sm text-white/70 mb-6 text-left">
+          <div className="nm-inset p-4 text-sm text-white/70 mb-6 text-left">
             <p className="font-bold text-white mb-2">What happens next:</p>
             <ul className="space-y-1">
               <li>✉️ Confirmation email sent to {booking.email || 'you'}</li>
@@ -71,7 +71,7 @@ export default function Book() {
   }
 
   return (
-    <div className="bg-nm-bg min-h-screen">
+    <div className="bg-[var(--nm-bg)] min-h-screen">
       <section className="py-16" style={{ background: '#0f2440', borderBottom: '1px solid rgba(0,196,240,0.15)' }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <p className="section-label mb-3">Online Booking</p>
@@ -110,14 +110,14 @@ export default function Book() {
                         style={booking.service === s ? { background: '#1a3a6e', boxShadow: 'inset 3px 3px 8px #0f2440, inset -3px -3px 8px #254f9e', borderColor: 'rgba(0,196,240,0.5)' } : {}}>
                         <div className="w-4 h-4 rounded-sm flex-shrink-0 flex items-center justify-center"
                           style={booking.service === s ? { background: '#00C4F0' } : { background: '#1a3a6e', boxShadow: 'inset 2px 2px 5px #0f2440, inset -2px -2px 5px #254f9e' }}>
-                          {booking.service === s && <span className="text-nm-dark text-[10px] font-black">✓</span>}
+                          {booking.service === s && <span className="text-[var(--nm-dark)] text-[10px] font-black">✓</span>}
                         </div>
                         <span className={`font-bold text-sm ${booking.service === s ? 'text-[#00C4F0]' : 'text-white/80'}`}>{s}</span>
                       </button>
                     ))}
                   </div>
                   <div className="mt-8 flex justify-end">
-                    <button onClick={next} disabled={!booking.service} className="nm-btn-yellow nm-btn-lg disabled:opacity-40 disabled:cursor-not-allowed">Next: Choose Date →</button>
+                    <button onClick={next} disabled={!booking.service} className="nm-btn-yellow text-base px-8 py-4 disabled:opacity-40 disabled:cursor-not-allowed">Next: Choose Date →</button>
                   </div>
                 </div>
               )}
@@ -147,7 +147,7 @@ export default function Book() {
                   </div>
                   <div className="mt-8 flex justify-between">
                     <button onClick={back} className="nm-btn-primary">← Back</button>
-                    <button onClick={next} disabled={!booking.date || !booking.time} className="nm-btn-yellow nm-btn-lg disabled:opacity-40 disabled:cursor-not-allowed">Next: Contact Info →</button>
+                    <button onClick={next} disabled={!booking.date || !booking.time} className="nm-btn-yellow text-base px-8 py-4 disabled:opacity-40 disabled:cursor-not-allowed">Next: Contact Info →</button>
                   </div>
                 </div>
               )}
@@ -169,7 +169,7 @@ export default function Book() {
                   </div>
                   <div className="mt-8 flex justify-between">
                     <button onClick={back} className="nm-btn-primary">← Back</button>
-                    <button onClick={next} disabled={!booking.name || !booking.phone} className="nm-btn-yellow nm-btn-lg disabled:opacity-40 disabled:cursor-not-allowed">Review Booking →</button>
+                    <button onClick={next} disabled={!booking.name || !booking.phone} className="nm-btn-yellow text-base px-8 py-4 disabled:opacity-40 disabled:cursor-not-allowed">Review Booking →</button>
                   </div>
                 </div>
               )}
@@ -187,13 +187,13 @@ export default function Book() {
                       ))}
                     </div>
                   </div>
-                  <div className="nm-card-inset p-4 mb-6 flex items-start gap-3">
+                  <div className="nm-inset p-4 mb-6 flex items-start gap-3">
                     <span className="text-xl">🔒</span>
                     <p className="text-sm text-white/70"><strong className="text-white">Licensed & Insured.</strong> NV Contractor License #C-53-12345. You'll receive a confirmation email and a call within 2 hours.</p>
                   </div>
                   <div className="flex justify-between">
                     <button onClick={back} className="nm-btn-primary">← Edit</button>
-                    <button onClick={handleSubmit} disabled={loading} className="nm-btn-yellow nm-btn-lg disabled:opacity-60 disabled:cursor-not-allowed">
+                    <button onClick={handleSubmit} disabled={loading} className="nm-btn-yellow text-base px-8 py-4 disabled:opacity-60 disabled:cursor-not-allowed">
                       {loading ? (
                         <span className="flex items-center gap-2">
                           <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
