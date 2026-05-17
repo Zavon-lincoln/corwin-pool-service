@@ -10,7 +10,7 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply font-body bg-brand-cream text-brand-black;
+    background-color: #1a3a6e; color: white; font-family: Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 }
