@@ -2,43 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─────────────────────────────────────────────────────────────
-   NEUMORPHIC DESIGN SYSTEM — Corwin Pool Service
-   Base: #1a3a6e  |  Dark: #0f2440  |  Light: #254f9e
-   Accent-Cyan: #00C4F0  |  Accent-Yellow: #FFE156
-───────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   CORWIN POOL SERVICE — NEUMORPHIC DESIGN SYSTEM
+   Base: #e8f2f7  |  Shadow dark: #b8ccd8  |  Shadow light: #fff
+   Primary: #0077b6  |  Text: #0d2a3d
+═══════════════════════════════════════════════════════════════ */
 
 :root {
-  --nm-bg:      #1a3a6e;
-  --nm-dark:    #0f2440;
-  --nm-light:   #254f9e;
-  --nm-surface: #1e4080;
-  --nm-deep:    #162f5a;
-  --nm-deeper:  #0f2440;
-  --nm-cyan:    #00C4F0;
-  --nm-yellow:  #FFE156;
-  --nm-text:    rgba(224, 238, 255, 0.85);
-  --nm-muted:   rgba(224, 238, 255, 0.50);
-  --nm-faint:   rgba(224, 238, 255, 0.30);
+  --nm-bg:      #e8f2f7;
+  --nm-alt:     #f0f7fb;
+  --nm-dark:    #b8ccd8;
+  --nm-light:   #ffffff;
+  --nm-blue:    #0077b6;
+  --nm-teal:    #00b4d8;
+  --nm-sky:     #90e0ef;
+  --nm-navy:    #0d2a3d;
+  --nm-body:    #3d6070;
+  --nm-muted:   #7a9fb0;
+  --nm-faint:   #b0c8d4;
+  --nm-footer:  #0d2a3d;
 
-  --shadow-nm:         6px 6px 14px #0f2440, -6px -6px 14px #254f9e;
-  --shadow-nm-sm:      3px 3px 8px  #0f2440, -3px  -3px  8px #254f9e;
-  --shadow-nm-lg:      10px 10px 22px #0f2440, -10px -10px 22px #254f9e;
-  --shadow-nm-xl:      14px 14px 30px #0f2440, -14px -14px 30px #254f9e;
-  --shadow-inset:      inset 4px 4px 10px #0f2440, inset -4px -4px 10px #254f9e;
-  --shadow-inset-sm:   inset 2px 2px  6px #0f2440, inset -2px  -2px  6px #254f9e;
-  --shadow-inset-lg:   inset 6px 6px 16px #0f2440, inset -6px -6px 16px #254f9e;
+  --shadow-nm:         7px 7px 15px #b8ccd8, -7px -7px 15px #ffffff;
+  --shadow-nm-sm:      4px 4px 9px  #b8ccd8, -4px  -4px  9px #ffffff;
+  --shadow-nm-lg:      12px 12px 24px #b8ccd8, -12px -12px 24px #ffffff;
+  --shadow-nm-xl:      18px 18px 36px #aac0cc, -18px -18px 36px #ffffff;
+  --shadow-inset:      inset 5px 5px 10px #b8ccd8, inset -5px -5px 10px #ffffff;
+  --shadow-inset-sm:   inset 3px 3px 6px  #b8ccd8, inset -3px  -3px  6px #ffffff;
+  --shadow-inset-lg:   inset 7px 7px 15px #aac0cc, inset -7px -7px 15px #ffffff;
 }
 
 /* ── Base ─────────────────────────────────────────────────── */
 @layer base {
-  * { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     background-color: var(--nm-bg);
-    color: var(--nm-text);
-    font-family: Inter, system-ui, sans-serif;
+    color: var(--nm-body);
+    font-family: 'DM Sans', Inter, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--nm-navy);
+    font-family: 'DM Sans', Inter, system-ui, sans-serif;
+    font-weight: 700;
+    line-height: 1.15;
   }
 }
 
@@ -49,230 +57,231 @@
   .nm-card {
     background: var(--nm-bg);
     box-shadow: var(--shadow-nm);
-    border-radius: 1rem;
+    border-radius: 1.25rem;
   }
   .nm-card-sm {
     background: var(--nm-bg);
     box-shadow: var(--shadow-nm-sm);
-    border-radius: 0.75rem;
+    border-radius: 0.875rem;
   }
   .nm-card-lg {
     background: var(--nm-bg);
     box-shadow: var(--shadow-nm-lg);
-    border-radius: 1.5rem;
+    border-radius: 1.75rem;
   }
   .nm-card-xl {
     background: var(--nm-bg);
     box-shadow: var(--shadow-nm-xl);
     border-radius: 2rem;
   }
-  /* Glowing accent variant */
-  .nm-card-accent {
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm), 0 0 28px rgba(0,196,240,0.12);
-    border-radius: 1rem;
-    border: 1px solid rgba(0,196,240,0.18);
-  }
-  .nm-card-yellow {
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm), 0 0 28px rgba(255,225,86,0.10);
-    border-radius: 1rem;
-    border: 1px solid rgba(255,225,86,0.18);
+  /* Flat panel — same bg, subtle shadow for depth on alt sections */
+  .nm-panel {
+    background: var(--nm-alt);
+    box-shadow: var(--shadow-nm-sm);
+    border-radius: 1.25rem;
   }
 
-  /* ── Inset / pressed surfaces ── */
+  /* ── Inset / pressed ── */
   .nm-inset {
     background: var(--nm-bg);
     box-shadow: var(--shadow-inset);
-    border-radius: 0.75rem;
+    border-radius: 0.875rem;
   }
   .nm-inset-sm {
     background: var(--nm-bg);
     box-shadow: var(--shadow-inset-sm);
-    border-radius: 0.5rem;
+    border-radius: 0.625rem;
   }
   .nm-inset-lg {
     background: var(--nm-bg);
     box-shadow: var(--shadow-inset-lg);
-    border-radius: 1rem;
-  }
-  /* Deep inset on a darker bg */
-  .nm-inset-deep {
-    background: var(--nm-deep);
-    box-shadow: inset 4px 4px 12px #0a1e36, inset -4px -4px 12px #1a3a6e;
-    border-radius: 0.75rem;
-  }
-
-  /* ── Elevated surface (slightly lighter) ── */
-  .nm-surface {
-    background: var(--nm-surface);
-    box-shadow: var(--shadow-nm-sm);
-    border-radius: 0.75rem;
+    border-radius: 1.25rem;
   }
 
   /* ── Buttons ── */
+
+  /* Primary CTA — filled blue, colored shadow */
   .nm-btn-primary {
-    @apply inline-flex items-center gap-2 font-bold uppercase tracking-wider text-sm
-           cursor-pointer transition-all duration-150 text-white;
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm-sm);
-    border-radius: 0.75rem;
-    padding: 0.75rem 1.5rem;
+    @apply inline-flex items-center justify-center gap-2 font-semibold text-sm
+           cursor-pointer transition-all duration-200 text-white tracking-wide;
+    background: var(--nm-blue);
+    box-shadow: 5px 5px 12px #005f94, -3px -3px 8px rgba(0,180,216,0.35);
+    border-radius: 0.875rem;
+    padding: 0.75rem 1.75rem;
     border: none;
     text-decoration: none;
   }
   .nm-btn-primary:hover {
-    box-shadow: var(--shadow-nm);
-    color: #00C4F0;
+    background: #006aa3;
+    box-shadow: 7px 7px 16px #004d75, -4px -4px 10px rgba(0,180,216,0.4);
+    transform: translateY(-1px);
   }
   .nm-btn-primary:active {
-    box-shadow: var(--shadow-inset-sm);
+    transform: translateY(0);
+    box-shadow: inset 3px 3px 8px #004d75, inset -2px -2px 6px rgba(0,180,216,0.3);
   }
 
-  .nm-btn-yellow {
-    @apply inline-flex items-center gap-2 font-bold uppercase tracking-wider text-sm
-           cursor-pointer transition-all duration-150;
+  /* Secondary — raised, blue text */
+  .nm-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 font-semibold text-sm
+           cursor-pointer transition-all duration-200 tracking-wide;
     background: var(--nm-bg);
     box-shadow: var(--shadow-nm-sm);
-    border-radius: 0.75rem;
-    padding: 0.75rem 1.5rem;
+    border-radius: 0.875rem;
+    padding: 0.75rem 1.75rem;
     border: none;
-    color: #FFE156;
+    color: var(--nm-blue);
     text-decoration: none;
   }
-  .nm-btn-yellow:hover {
+  .nm-btn-secondary:hover {
     box-shadow: var(--shadow-nm);
-    color: #fff8c0;
+    color: var(--nm-navy);
+    transform: translateY(-1px);
   }
-  .nm-btn-yellow:active {
+  .nm-btn-secondary:active {
     box-shadow: var(--shadow-inset-sm);
+    transform: translateY(0);
   }
 
-  .nm-btn-cyan {
-    @apply inline-flex items-center gap-2 font-bold uppercase tracking-wider text-sm
-           cursor-pointer transition-all duration-150;
+  /* Ghost / outline — inset, blue text */
+  .nm-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 font-semibold text-sm
+           cursor-pointer transition-all duration-200 tracking-wide;
     background: var(--nm-bg);
-    box-shadow: var(--shadow-nm-sm);
-    border-radius: 0.75rem;
-    padding: 0.75rem 1.5rem;
+    box-shadow: var(--shadow-inset-sm);
+    border-radius: 0.875rem;
+    padding: 0.75rem 1.75rem;
     border: none;
-    color: #00C4F0;
+    color: var(--nm-muted);
     text-decoration: none;
   }
-  .nm-btn-cyan:hover {
-    box-shadow: var(--shadow-nm);
-    color: white;
-  }
-  .nm-btn-cyan:active {
-    box-shadow: var(--shadow-inset-sm);
+  .nm-btn-ghost:hover {
+    box-shadow: var(--shadow-nm-sm);
+    color: var(--nm-blue);
   }
 
-  /* ── Form Inputs (inset = feels carved in) ── */
+  /* ── Form inputs (inset = carved into the surface) ── */
   .nm-input {
-    @apply w-full font-body px-4 py-3 transition-all duration-150 outline-none text-sm text-white;
+    @apply w-full font-body px-4 py-3 transition-all duration-150
+           outline-none text-sm;
     background: var(--nm-bg);
     box-shadow: var(--shadow-inset-sm);
-    border-radius: 0.625rem;
-    border: 1px solid transparent;
-    color: white;
+    border-radius: 0.75rem;
+    border: 1.5px solid transparent;
+    color: var(--nm-navy);
+    font-family: inherit;
   }
-  .nm-input::placeholder { color: rgba(224,238,255,0.35); }
+  .nm-input::placeholder { color: var(--nm-faint); }
   .nm-input:focus {
-    border-color: rgba(0,196,240,0.35);
-    box-shadow: var(--shadow-inset-sm), 0 0 0 2px rgba(0,196,240,0.08);
+    border-color: var(--nm-teal);
+    box-shadow: var(--shadow-inset-sm), 0 0 0 3px rgba(0,180,216,0.08);
     outline: none;
   }
   .nm-select {
     @apply nm-input appearance-none cursor-pointer;
   }
-  .nm-select option { background: #1a3a6e; color: white; }
+  .nm-select option { background: var(--nm-bg); color: var(--nm-navy); }
 
-  /* ── Section headings ── */
-  .section-label {
-    @apply text-xs font-bold tracking-widest2 uppercase;
-    color: var(--nm-cyan);
+  /* ── Typography helpers ── */
+  .nm-label {
+    @apply text-xs font-semibold tracking-widest2 uppercase;
+    color: var(--nm-teal);
   }
-  .section-title {
-    @apply font-display text-5xl md:text-6xl leading-none text-white;
+  .nm-heading {
+    color: var(--nm-navy);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 800;
+    line-height: 1.1;
   }
-  .section-title-cyan {
-    @apply font-display text-5xl md:text-6xl leading-none;
-    color: var(--nm-cyan);
+  .nm-heading-xl {
+    @apply nm-heading text-4xl md:text-5xl lg:text-6xl;
   }
-  .section-title-yellow {
-    @apply font-display text-5xl md:text-6xl leading-none;
-    color: var(--nm-yellow);
+  .nm-heading-lg {
+    @apply nm-heading text-3xl md:text-4xl;
+  }
+  .nm-heading-md {
+    @apply nm-heading text-2xl md:text-3xl;
+  }
+  .nm-body {
+    color: var(--nm-body);
+    line-height: 1.7;
+  }
+  .nm-muted {
+    color: var(--nm-muted);
   }
 
   /* ── Section padding ── */
   .section-pad { @apply py-20 md:py-28; }
 
-  /* ── Badge / tag ── */
+  /* ── Badge ── */
   .nm-badge {
-    @apply inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider;
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold tracking-wide px-3 py-1.5;
     background: var(--nm-bg);
     box-shadow: var(--shadow-nm-sm);
     border-radius: 2rem;
-    padding: 0.35rem 0.9rem;
-    color: #FFE156;
+    color: var(--nm-blue);
   }
-  .nm-badge-cyan {
-    @apply inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider;
-    background: var(--nm-bg);
-    box-shadow: var(--shadow-nm-sm);
-    border-radius: 2rem;
-    padding: 0.35rem 0.9rem;
-    color: #00C4F0;
+  .nm-badge-teal {
+    @apply nm-badge;
+    color: var(--nm-teal);
   }
 
   /* ── Divider ── */
   .nm-divider {
     height: 1px;
-    background: linear-gradient(to right, transparent, rgba(0,196,240,0.25), transparent);
-    margin: 0;
+    background: linear-gradient(to right, transparent, var(--nm-dark), transparent);
+    opacity: 0.5;
   }
 
   /* ── Trust chip ── */
-  .nm-trust-chip {
-    @apply flex items-center gap-2 text-sm font-semibold;
+  .nm-chip {
+    @apply inline-flex items-center gap-2 text-sm font-medium;
     background: var(--nm-bg);
     box-shadow: var(--shadow-inset-sm);
-    border-radius: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    color: var(--nm-text);
+    border-radius: 0.625rem;
+    padding: 0.5rem 0.875rem;
+    color: var(--nm-body);
+  }
+
+  /* ── Icon circle ── */
+  .nm-icon {
+    @apply flex items-center justify-center flex-shrink-0;
+    background: var(--nm-bg);
+    box-shadow: var(--shadow-nm-sm);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+  }
+  .nm-icon-lg {
+    @apply nm-icon;
+    width: 4rem;
+    height: 4rem;
   }
 }
 
-/* ── Scrollbar ───────────────────────────────────────────── */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--nm-darker, #0f2440); }
-::-webkit-scrollbar-thumb { background: #1e4080; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #254f9e; }
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 7px; }
+::-webkit-scrollbar-track { background: var(--nm-bg); }
+::-webkit-scrollbar-thumb { background: var(--nm-dark); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--nm-muted); }
 
-/* ── Ticker ─────────────────────────────────────────────── */
+/* ── Ticker ─────────────────────────────────────────────────── */
 @keyframes ticker {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-.ticker-animate { animation: ticker 22s linear infinite; }
+.ticker-animate { animation: ticker 28s linear infinite; }
 
-/* ── Wave ───────────────────────────────────────────────── */
-@keyframes wave-slide {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.wave-animate { animation: wave-slide 8s linear infinite; }
-
-/* ── Glow pulse ─────────────────────────────────────────── */
-@keyframes nm-glow {
-  0%, 100% { box-shadow: var(--shadow-nm), 0 0 15px rgba(0,196,240,0.10); }
-  50%       { box-shadow: var(--shadow-nm), 0 0 35px rgba(0,196,240,0.22); }
-}
-.nm-glow { animation: nm-glow 3s ease-in-out infinite; }
-
-/* ── Soft float ─────────────────────────────────────────── */
+/* ── Subtle float ─────────────────────────────────────────── */
 @keyframes nm-float {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-6px); }
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
 }
-.nm-float { animation: nm-float 4s ease-in-out infinite; }
+.nm-float { animation: nm-float 5s ease-in-out infinite; }
+
+/* ── Shimmer on blue button ────────────────────────────────── */
+@keyframes nm-shimmer {
+  0%   { opacity: 0.6; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.6; }
+}

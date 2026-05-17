@@ -2,117 +2,117 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import LeadForm from '../components/LeadForm'
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  show:   { opacity: 1, y: 0 },
-}
+const fadeUp = { hidden:{ opacity:0, y:24 }, show:{ opacity:1, y:0 } }
 
 const services = [
-  { icon: '🌊', title: 'Weekly Maintenance',  desc: 'Chemicals, brushing, vacuuming, filter checks — every week, on schedule.' },
-  { icon: '🦠', title: 'Green Pool Rescue',   desc: 'Algae gone in 24–72 hrs. Guaranteed crystal clear or we come back free.' },
-  { icon: '🔧', title: 'Equipment Repair',    desc: 'Pumps, heaters, filters, automation — we fix it fast.' },
-  { icon: '🧹', title: 'Deep Clean',          desc: 'One-time or seasonal. Before parties, after move-ins, or just because.' },
-  { icon: '🔍', title: 'Leak Detection',      desc: 'Losing water? We find it and fix it — same-day diagnosis.' },
-  { icon: '💎', title: 'Tile & Surface Care', desc: "Calcium buildup, acid washing, tile scrubbing. Restore your pool's shine." },
+  { icon:'🌊', title:'Weekly Maintenance',   desc:'Chemicals, brushing, vacuuming, filter checks — every week, on schedule.' },
+  { icon:'🦠', title:'Green Pool Rescue',    desc:'Algae gone in 24–72 hrs. Guaranteed crystal clear or we come back free.' },
+  { icon:'🔧', title:'Equipment Repair',     desc:'Pumps, heaters, filters, automation — diagnosed and fixed fast.' },
+  { icon:'🧹', title:'Deep Clean',           desc:'One-time or seasonal. Before parties, after move-ins, or just because.' },
+  { icon:'🔍', title:'Leak Detection',       desc:'Losing water? We find it and fix it — same-day diagnosis.' },
+  { icon:'💎', title:'Tile & Surface Care',  desc:"Calcium buildup, acid washing, tile scrubbing. Restore your pool's shine." },
 ]
 
 const testimonials = [
-  { name: 'Marcus T.',      location: 'Summerlin',       stars: 5, text: '"Corwin has been cleaning my pool for 4 years. Never missed a visit, always leaves it immaculate. My neighbor hired them after seeing how great mine looks."',     service: 'Weekly Maintenance' },
-  { name: 'Diane R.',       location: 'Henderson',       stars: 5, text: '"Green pool emergency — they showed up same day and had it crystal clear in 48 hours. I\'ve been with them ever since. Best pool service in Vegas, period."',            service: 'Green Pool Rescue' },
-  { name: 'Tom & Lisa W.',  location: 'Centennial Hills',stars: 5, text: '"Fast, professional, and actually shows up when they say they will. We had three other companies ghost us. Corwin has been reliable for 2+ years straight."',          service: 'Weekly Maintenance' },
+  { name:'Marcus T.',     loc:'Summerlin',        text:'Corwin has been cleaning my pool for 4 years. Never missed a visit, always leaves it immaculate. My neighbor hired them after seeing how great mine looks.',   service:'Weekly Maintenance' },
+  { name:'Diane R.',      loc:'Henderson',        text:'Green pool emergency — they showed up same day and had it crystal clear in 48 hours. I\'ve been with them ever since. Best pool service in Vegas, period.',  service:'Green Pool Rescue'  },
+  { name:'Tom & Lisa W.', loc:'Centennial Hills', text:'Fast, professional, and actually shows up. We had three other companies ghost us. Corwin has been reliable for 2+ years straight. Worth every penny.',         service:'Weekly Maintenance' },
 ]
 
 const stats = [
-  { value: '25+', label: 'Years in Business' },
-  { value: '500+', label: 'Happy Customers' },
-  { value: '5★',   label: 'Avg Review Rating' },
-  { value: '#1',   label: 'Best of Las Vegas' },
+  { value:'25+', label:'Years in Business'  },
+  { value:'500+',label:'Happy Customers'    },
+  { value:'5.0', label:'Avg Star Rating'    },
+  { value:'#1',  label:'Best of Las Vegas'  },
 ]
 
 export default function Home() {
   return (
-    <div style={{ background: 'var(--nm-bg)' }}>
+    <div style={{ background:'var(--nm-bg)' }}>
 
-      {/* ─── HERO ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden" style={{ background: 'var(--nm-deep)' }}>
-        {/* Concentric ring bg pattern */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {Array.from({ length: 12 }).map((_, i) => (
+      {/* ── HERO ───────────────────────────────────────────── */}
+      <section style={{ background:'var(--nm-alt)' }} className="relative overflow-hidden">
+        {/* Soft water-circle bg detail */}
+        <div className="absolute inset-0 pointer-events-none" style={{ overflow:'hidden' }}>
+          {[350,500,650,800].map((s,i) => (
             <div key={i} className="absolute rounded-full"
-              style={{
-                width:  (i + 1) * 80, height: (i + 1) * 80,
-                top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
-                border: '1px solid rgba(0,196,240,0.04)',
-              }} />
+              style={{ width:s, height:s, right:`-${s/4}px`, bottom:`-${s/3}px`,
+                border:`1px solid rgba(0,119,182,0.06)` }}/>
           ))}
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-0 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-24 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
             {/* Left: Copy */}
-            <motion.div variants={fadeUp} initial="hidden" animate="show" transition={{ duration: 0.5 }}
-              className="pb-16 lg:pb-20">
+            <motion.div variants={fadeUp} initial="hidden" animate="show" transition={{ duration:0.5 }}>
+              <span className="nm-badge mb-6">🏆 Best of Las Vegas 2023</span>
 
-              <span className="nm-badge mb-6 inline-flex">🏆 Best of Las Vegas Gold Winner 2023</span>
-
-              <h1 className="font-display text-6xl md:text-7xl lg:text-8xl text-white leading-none mb-4">
-                VEGAS'S #1<br />
-                <span style={{ color: 'var(--nm-cyan)' }}>POOL</span><br />
-                SERVICE
+              <h1 className="nm-heading text-5xl md:text-6xl lg:text-7xl mb-5" style={{ letterSpacing:'-0.02em' }}>
+                Las Vegas's<br />
+                <span style={{ color:'var(--nm-blue)' }}>Pool Care</span><br />
+                Professionals
               </h1>
 
-              <p style={{ color: 'var(--nm-muted)' }} className="text-lg mb-8 max-w-md leading-relaxed">
-                Crystal-clear water. Every week. Guaranteed. Corwin Pool Service has kept Las Vegas pools spotless since{' '}
-                <strong className="text-white">2000</strong>.
+              <p className="nm-body text-lg mb-8 max-w-md">
+                Crystal-clear water, every week — guaranteed. Corwin Pool Service has kept Las Vegas pools spotless since <strong style={{ color:'var(--nm-navy)' }}>2000</strong>.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <Link to="/book" className="nm-btn-yellow text-base px-8 py-4 justify-center sm:justify-start">
-                  Book Online Now →
+              <div className="flex flex-col sm:flex-row gap-3 mb-8">
+                <Link to="/book" className="nm-btn-primary text-base px-7 py-3.5">
+                  Book Free Estimate →
                 </Link>
-                <a href="tel:7024602406" className="nm-btn-primary text-base px-8 py-4 justify-center sm:justify-start">
+                <a href="tel:7024602406" className="nm-btn-secondary text-base px-7 py-3.5">
                   📞 702-460-2406
                 </a>
               </div>
 
               <div className="flex flex-wrap gap-3">
-                {['Licensed & Insured', '2-Hr Response', 'Free Estimate'].map(t => (
-                  <div key={t} className="nm-trust-chip">
-                    <span style={{ color: 'var(--nm-cyan)' }}>✓</span> {t}
+                {['Licensed & Insured','2-Hr Response','Free Estimate'].map(t => (
+                  <div key={t} className="nm-chip">
+                    <span style={{ color:'var(--nm-teal)' }}>✓</span> {t}
                   </div>
                 ))}
               </div>
             </motion.div>
 
-            {/* Right: Lead form */}
-            <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }} className="pb-8 lg:pb-16">
-              <LeadForm dark />
+            {/* Right: Form */}
+            <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
+              transition={{ duration:0.5, delay:0.15 }}>
+              <LeadForm />
             </motion.div>
           </div>
         </div>
+      </section>
 
-        {/* Wave bottom */}
-        <div className="relative -mt-1">
-          <svg viewBox="0 0 1200 80" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path d="M0,40 C200,10 400,70 600,40 C800,10 1000,70 1200,40 L1200,80 L0,80 Z"
-              fill="var(--nm-bg)" opacity="0.9"/>
-          </svg>
+      {/* ── STATS ──────────────────────────────────────────── */}
+      <section style={{ background:'var(--nm-bg)' }} className="py-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {stats.map(({ value, label }, i) => (
+              <motion.div key={label}
+                initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ delay:i*0.08 }}
+                className="nm-card p-6 text-center">
+                <div className="text-4xl font-extrabold mb-1" style={{ color:'var(--nm-blue)' }}>{value}</div>
+                <div className="text-xs font-medium uppercase tracking-widest" style={{ color:'var(--nm-muted)' }}>{label}</div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ─── TICKER ───────────────────────────────────────── */}
-      <div className="py-4 overflow-hidden" style={{ background: 'var(--nm-deep)' }}>
-        <div className="nm-inset mx-4 sm:mx-8 py-3 overflow-hidden" style={{ borderRadius: '2rem' }}>
+      {/* ── TICKER ─────────────────────────────────────────── */}
+      <div style={{ background:'var(--nm-alt)' }} className="py-5 overflow-hidden">
+        <div className="nm-inset mx-6 sm:mx-12 py-3.5 px-6 overflow-hidden" style={{ borderRadius:'3rem' }}>
           <div className="ticker-animate flex whitespace-nowrap">
-            {Array.from({ length: 4 }).map((_, i) => (
+            {Array.from({ length:4 }).map((_,i) => (
               <span key={i} className="flex items-center">
-                {['⭐ Weekly Maintenance', '🏆 Best of Las Vegas 2023', '🌊 Green Pool Rescue',
-                  '🔧 Same-Day Repairs', '✅ 500+ Happy Clients', '💧 Serving Vegas Since 2000', '📞 Free Estimates'
+                {['⭐ Weekly Maintenance','🏆 Best of Las Vegas 2023','🌊 Green Pool Rescue',
+                  '🔧 Same-Day Repairs','✅ 500+ Happy Clients','💧 Vegas Since 2000','📞 Free Estimates'
                 ].map(item => (
-                  <span key={item} className="mx-8 text-sm font-black uppercase tracking-widest"
-                    style={{ color: 'var(--nm-cyan)' }}>{item}</span>
+                  <span key={item} className="mx-8 text-sm font-semibold"
+                    style={{ color:'var(--nm-blue)' }}>{item}</span>
                 ))}
               </span>
             ))}
@@ -120,170 +120,153 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ─── STATS ────────────────────────────────────────── */}
-      <section className="section-pad" style={{ background: 'var(--nm-bg)' }}>
+      {/* ── SERVICES ───────────────────────────────────────── */}
+      <section style={{ background:'var(--nm-bg)' }} className="section-pad">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {stats.map(({ value, label }, i) => (
-              <motion.div key={label}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="nm-card p-6 text-center">
-                <div className="font-display text-5xl mb-1" style={{ color: 'var(--nm-cyan)' }}>{value}</div>
-                <div className="text-xs font-bold uppercase tracking-wider" style={{ color: 'var(--nm-muted)' }}>{label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── SERVICES ─────────────────────────────────────── */}
-      <section className="section-pad" style={{ background: 'var(--nm-deep)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}
-            className="text-center mb-14">
-            <p className="section-label mb-3">What We Do</p>
-            <h2 className="section-title">EVERY SERVICE<br />YOUR POOL NEEDS</h2>
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show"
+            viewport={{ once:true }} className="text-center mb-14">
+            <p className="nm-label mb-3">What We Do</p>
+            <h2 className="nm-heading-xl mb-4">Every Service Your Pool Needs</h2>
+            <p className="nm-body max-w-xl mx-auto">
+              From routine maintenance to emergency rescues — we handle it all.
+            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map(({ icon, title, desc }, i) => (
               <motion.div key={title}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                className="nm-card p-6 transition-all duration-200 hover:shadow-nm-lg cursor-default">
-                <div className="text-4xl mb-4">{icon}</div>
-                <h3 className="font-display text-2xl mb-2" style={{ color: 'var(--nm-cyan)' }}>{title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--nm-muted)' }}>{desc}</p>
+                initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ delay:i*0.07 }}
+                className="nm-card p-6 transition-all duration-300 hover:shadow-nm-lg cursor-default group">
+                <div className="nm-icon mb-4 text-xl transition-all group-hover:shadow-nm">{icon}</div>
+                <h3 className="font-semibold text-lg mb-2" style={{ color:'var(--nm-navy)' }}>{title}</h3>
+                <p className="text-sm nm-body leading-relaxed">{desc}</p>
               </motion.div>
             ))}
           </div>
 
           <div className="text-center mt-10">
-            <Link to="/services" className="nm-btn-cyan text-sm px-8 py-4">
+            <Link to="/services" className="nm-btn-secondary px-8 py-3">
               See All Services & Pricing →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ─── WHY CORWIN ───────────────────────────────────── */}
-      <section className="section-pad" style={{ background: 'var(--nm-bg)' }}>
+      {/* ── WHY CORWIN ─────────────────────────────────────── */}
+      <section style={{ background:'var(--nm-alt)' }} className="section-pad">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-            <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}>
-              <p className="section-label mb-3">Why Corwin</p>
-              <h2 className="section-title mb-6">THE VEGAS POOL<br />EXPERTS SINCE<br />2000</h2>
-              <p className="leading-relaxed mb-8" style={{ color: 'var(--nm-muted)' }}>
-                In Las Vegas's 115°F summers, your pool isn't a luxury — it's a necessity.
-                We've been keeping Vegas pools crystal clear for over 25 years.
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once:true }}>
+              <p className="nm-label mb-3">Why Corwin</p>
+              <h2 className="nm-heading-xl mb-5">
+                Vegas Pool Experts<br />Since 2000
+              </h2>
+              <p className="nm-body mb-8">
+                In Las Vegas's 115°F summers, your pool isn't a luxury — it's a necessity. We've been keeping pools crystal clear for 25+ years, earning trust one backyard at a time.
               </p>
 
               <div className="space-y-3">
                 {[
-                  ['🏆', 'Award-Winning Service',  'Best of Las Vegas Gold Winner. Our customers vote for us year after year.'],
-                  ['⚡', 'Same-Day Response',       "Green pool emergency? We're there fast. Most emergencies handled same or next day."],
-                  ['🔐', 'Licensed, Bonded & Insured', 'NV License #C-53. Full liability coverage. You\'re protected.'],
-                  ['📅', 'Never Misses a Visit',   'We show up every single week — rain, heat, or holiday. Consistent, reliable.'],
+                  ['🏆','Award-Winning Service',      'Best of Las Vegas Gold Winner — voted by the community we serve.'],
+                  ['⚡','Same-Day Response',           'Green pool emergency? Most handled same or next day.'],
+                  ['🔐','Licensed, Bonded & Insured',  'NV License #C-53. Full liability coverage. You\'re protected.'],
+                  ['📅','Never Misses a Visit',        'We show up every week — rain, heat, or holiday.'],
                 ].map(([icon, title, desc]) => (
-                  <div key={title} className="nm-inset p-4 flex items-start gap-4">
-                    <span className="text-2xl flex-shrink-0">{icon}</span>
+                  <div key={title} className="nm-card-sm p-4 flex items-start gap-4">
+                    <div className="nm-icon text-base flex-shrink-0">{icon}</div>
                     <div>
-                      <div className="font-bold text-white text-sm">{title}</div>
-                      <div className="text-xs mt-0.5 leading-relaxed" style={{ color: 'var(--nm-muted)' }}>{desc}</div>
+                      <div className="font-semibold text-sm mb-0.5" style={{ color:'var(--nm-navy)' }}>{title}</div>
+                      <div className="text-xs nm-body leading-relaxed">{desc}</div>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 flex gap-4">
-                <Link to="/about" className="nm-btn-yellow">Learn Our Story →</Link>
-                <a href="tel:7024602406" className="nm-btn-primary">Call Now</a>
+              <div className="mt-8 flex gap-3">
+                <Link to="/about" className="nm-btn-primary">Learn Our Story →</Link>
+                <a href="tel:7024602406" className="nm-btn-secondary">Call Now</a>
               </div>
             </motion.div>
 
             {/* Stats card */}
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <div className="nm-card-lg p-8">
-                <div className="font-display text-9xl text-center leading-none mb-2"
-                  style={{ color: 'var(--nm-yellow)' }}>25</div>
-                <div className="font-display text-3xl text-white text-center mb-8 tracking-widest">YEARS STRONG</div>
+            <motion.div initial={{ opacity:0, scale:0.96 }} whileInView={{ opacity:1, scale:1 }}
+              viewport={{ once:true }} transition={{ duration:0.5 }} className="nm-float">
+              <div className="nm-card-xl p-8 text-center">
+                <div className="text-8xl font-extrabold mb-1" style={{ color:'var(--nm-blue)' }}>25</div>
+                <div className="font-semibold text-lg mb-8 tracking-widest uppercase"
+                  style={{ color:'var(--nm-muted)' }}>Years Strong</div>
 
-                <div className="nm-inset-lg p-6 relative overflow-hidden mb-4">
-                  <svg viewBox="0 0 400 180" className="w-full">
-                    <rect x="20" y="30" width="360" height="130" rx="16" fill="rgba(0,196,240,0.08)"/>
-                    <rect x="20" y="30" width="360" height="130" rx="16" fill="none"
-                      stroke="rgba(0,196,240,0.3)" strokeWidth="2"/>
-                    {[55, 80, 105, 130].map(y => (
-                      <path key={y} d={`M40,${y} Q100,${y-12} 160,${y} Q220,${y+12} 280,${y} Q340,${y-12} 380,${y}`}
-                        stroke="#00C4F0" strokeWidth="1.5" fill="none" opacity="0.5"/>
+                <div className="nm-inset-lg p-5 mb-5">
+                  <svg viewBox="0 0 360 140" className="w-full">
+                    <rect x="10" y="10" width="340" height="120" rx="12"
+                      fill="none" stroke="rgba(0,119,182,0.15)" strokeWidth="1.5"/>
+                    {[35,55,75,95,115].map(y => (
+                      <path key={y} d={`M10,${y} Q90,${y-12} 180,${y} Q270,${y+12} 350,${y}`}
+                        stroke="rgba(0,180,216,0.35)" strokeWidth="1.5" fill="none"/>
                     ))}
-                    {[[60,50],[200,65],[330,55],[150,130],[290,125]].map(([x,y], j) => (
-                      <text key={j} x={x} y={y} fill="#FFE156" fontSize="12" textAnchor="middle">✦</text>
-                    ))}
-                    <text x="200" y="165" fill="rgba(224,238,255,0.7)" fontSize="14"
-                      fontWeight="700" textAnchor="middle" fontFamily="Arial" letterSpacing="4">
+                    <text x="180" y="132" fill="rgba(61,96,112,0.5)" fontSize="11"
+                      fontWeight="600" textAnchor="middle" fontFamily="inherit" letterSpacing="4">
                       CRYSTAL CLEAR
                     </text>
                   </svg>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3">
-                  {['Mon', 'Wed', 'Fri'].map(d => (
+                  {['Mon','Wed','Fri'].map(d => (
                     <div key={d} className="nm-card-sm p-3 text-center">
-                      <div className="text-xs font-bold" style={{ color: 'var(--nm-cyan)' }}>{d}</div>
-                      <div className="text-white text-lg">✓</div>
+                      <div className="text-xs font-semibold mb-1" style={{ color:'var(--nm-muted)' }}>{d}</div>
+                      <div className="text-base" style={{ color:'var(--nm-teal)' }}>✓</div>
                     </div>
                   ))}
                 </div>
-                <p className="text-center text-xs font-bold mt-3" style={{ color: 'var(--nm-muted)' }}>
-                  EVERY WEEK, ON SCHEDULE
-                </p>
+                <p className="text-xs mt-3 font-medium tracking-wide uppercase"
+                  style={{ color:'var(--nm-muted)' }}>Every Week, On Schedule</p>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ─── BEFORE / AFTER ───────────────────────────────── */}
-      <section className="section-pad" style={{ background: 'var(--nm-deep)' }}>
+      {/* ── BEFORE / AFTER ─────────────────────────────────── */}
+      <section style={{ background:'var(--nm-bg)' }} className="section-pad">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}
-            className="text-center mb-14">
-            <p className="section-label mb-3">Proof of Work</p>
-            <h2 className="section-title">BEFORE & AFTER</h2>
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show"
+            viewport={{ once:true }} className="text-center mb-14">
+            <p className="nm-label mb-3">Proof of Work</p>
+            <h2 className="nm-heading-xl">Before & After</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { before: '#2d5a27', after: '#00C4F0', label: 'Severe Algae → Crystal Clear', time: '48 Hours' },
-              { before: '#8B6914', after: '#0099cc', label: 'Neglected Pool → Sparkling',   time: '72 Hours' },
-              { before: '#1a3a1a', after: '#0077b6', label: 'Black Algae → Pristine',       time: '5 Days'   },
+              { before:'#6aaa5c', after:'#48cae4', label:'Severe Algae → Crystal Clear', time:'48 Hours' },
+              { before:'#9a8040', after:'#90e0ef', label:'Neglected Pool → Sparkling',   time:'72 Hours' },
+              { before:'#3a5a38', after:'#00b4d8', label:'Black Algae → Pristine',       time:'5 Days'   },
             ].map(({ before, after, label, time }, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+              <motion.div key={i}
+                initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ delay:i*0.1 }}>
                 <div className="nm-card overflow-hidden">
                   <div className="grid grid-cols-2">
-                    <div style={{ background: before }} className="h-40 flex items-center justify-center">
-                      <span className="text-white font-bold text-xs px-2 py-1 rounded"
-                        style={{ background: 'rgba(0,0,0,0.45)' }}>BEFORE</span>
+                    <div style={{ background:before }} className="h-36 flex items-end pb-2 justify-center">
+                      <span className="text-white text-[10px] font-semibold tracking-widest uppercase px-2 py-0.5 rounded"
+                        style={{ background:'rgba(0,0,0,0.35)' }}>Before</span>
                     </div>
-                    <div style={{ background: after }} className="h-40 flex items-center justify-center relative overflow-hidden">
-                      <svg viewBox="0 0 200 160" className="absolute inset-0 w-full h-full opacity-40">
-                        {[30,60,90,120].map(y => (
-                          <path key={y} d={`M0,${y} Q50,${y-12} 100,${y} Q150,${y+12} 200,${y}`}
+                    <div style={{ background:after }} className="h-36 flex items-end pb-2 justify-center relative overflow-hidden">
+                      <svg viewBox="0 0 200 144" className="absolute inset-0 w-full h-full opacity-25">
+                        {[28,52,76,100,124].map(y => (
+                          <path key={y} d={`M0,${y} Q50,${y-10} 100,${y} Q150,${y+10} 200,${y}`}
                             stroke="white" strokeWidth="2" fill="none"/>
                         ))}
                       </svg>
-                      <span className="text-white font-bold text-xs px-2 py-1 rounded relative z-10"
-                        style={{ background: 'rgba(0,0,0,0.45)' }}>AFTER</span>
+                      <span className="relative text-white text-[10px] font-semibold tracking-widest uppercase px-2 py-0.5 rounded"
+                        style={{ background:'rgba(0,0,0,0.35)' }}>After</span>
                     </div>
                   </div>
                   <div className="p-4">
-                    <p className="font-bold text-sm text-white">{label}</p>
-                    <p className="text-xs font-bold mt-1" style={{ color: 'var(--nm-cyan)' }}>⏱ {time}</p>
+                    <p className="font-semibold text-sm" style={{ color:'var(--nm-navy)' }}>{label}</p>
+                    <p className="text-xs mt-1 font-medium" style={{ color:'var(--nm-teal)' }}>⏱ {time}</p>
                   </div>
                 </div>
               </motion.div>
@@ -291,92 +274,86 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-8">
-            <Link to="/book" className="nm-btn-yellow text-base px-8 py-4">
+            <Link to="/book" className="nm-btn-primary text-base px-8 py-3.5">
               Get Your Pool Looking Like This →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ─── TESTIMONIALS ─────────────────────────────────── */}
-      <section className="section-pad" style={{ background: 'var(--nm-bg)' }}>
+      {/* ── TESTIMONIALS ───────────────────────────────────── */}
+      <section style={{ background:'var(--nm-alt)' }} className="section-pad">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}
-            className="text-center mb-14">
-            <p className="section-label mb-3">What Clients Say</p>
-            <h2 className="section-title">500+ HAPPY<br />LAS VEGAS POOLS</h2>
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show"
+            viewport={{ once:true }} className="text-center mb-14">
+            <p className="nm-label mb-3">What Clients Say</p>
+            <h2 className="nm-heading-xl">500+ Happy Las Vegas Pools</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map(({ name, location, stars, text, service }, i) => (
+            {testimonials.map(({ name, loc, text, service }, i) => (
               <motion.div key={name}
-                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="nm-card p-6 hover:shadow-nm-lg transition-all duration-200">
-                <div className="flex mb-3" style={{ color: '#FFE156' }}>
-                  {Array.from({ length: stars }).map((_, j) => <span key={j} className="text-xl">★</span>)}
+                initial={{ opacity:0, y:16 }} whileInView={{ opacity:1, y:0 }}
+                viewport={{ once:true }} transition={{ delay:i*0.1 }}
+                className="nm-card p-6 hover:shadow-nm-lg transition-all duration-300">
+                <div className="flex gap-0.5 mb-3">
+                  {[...Array(5)].map((_,j) => (
+                    <span key={j} className="text-lg" style={{ color:'#f59e0b' }}>★</span>
+                  ))}
                 </div>
-                <p className="text-sm leading-relaxed mb-4 italic" style={{ color: 'var(--nm-text)' }}>{text}</p>
-                <div className="nm-divider mb-3" />
-                <div className="font-bold text-white text-sm">{name}</div>
-                <div className="text-xs mt-0.5" style={{ color: 'var(--nm-muted)' }}>{location} · {service}</div>
+                <p className="text-sm nm-body leading-relaxed mb-5 italic">"{text}"</p>
+                <div className="nm-divider mb-4"/>
+                <div className="font-semibold text-sm" style={{ color:'var(--nm-navy)' }}>{name}</div>
+                <div className="text-xs mt-0.5" style={{ color:'var(--nm-muted)' }}>{loc} · {service}</div>
               </motion.div>
             ))}
           </div>
 
-          <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/reviews" className="nm-btn-yellow">Read All Reviews →</Link>
+          <div className="text-center mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+            <Link to="/reviews" className="nm-btn-primary">Read All Reviews →</Link>
             <a href="https://www.google.com/search?q=corwin+pool+service+las+vegas"
-              target="_blank" rel="noopener noreferrer" className="nm-btn-primary">
+              target="_blank" rel="noopener noreferrer" className="nm-btn-secondary">
               ⭐ Leave a Google Review
             </a>
           </div>
         </div>
       </section>
 
-      {/* ─── SERVICE AREA ─────────────────────────────────── */}
-      <section className="section-pad" style={{ background: 'var(--nm-deep)' }}>
+      {/* ── SERVICE AREA ───────────────────────────────────── */}
+      <section style={{ background:'var(--nm-bg)' }} className="section-pad">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}>
-              <p className="section-label mb-3">Where We Serve</p>
-              <h2 className="section-title mb-6">ALL OF LAS VEGAS<br />& HENDERSON</h2>
-              <p className="mb-6 leading-relaxed" style={{ color: 'var(--nm-muted)' }}>
-                From Summerlin to Henderson, Centennial to Southern Highlands — if you have a pool in the
-                Las Vegas Valley, we've got you covered.
-              </p>
+            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once:true }}>
+              <p className="nm-label mb-3">Where We Serve</p>
+              <h2 className="nm-heading-xl mb-5">All of Las Vegas & Henderson</h2>
+              <p className="nm-body mb-6">From Summerlin to Henderson, Centennial to Southern Highlands — if you have a pool in the Las Vegas Valley, we've got you covered.</p>
               <div className="grid grid-cols-2 gap-2 mb-8">
                 {['Summerlin','Centennial Hills','Henderson','Green Valley',
-                  'Southern Highlands','Aliante','North Las Vegas','Spring Valley'].map(area => (
-                  <div key={area} className="flex items-center gap-2 text-sm font-semibold text-white">
-                    <span className="w-2 h-2 rounded-full flex-shrink-0"
-                      style={{ background: 'var(--nm-cyan)', boxShadow: '0 0 6px rgba(0,196,240,0.5)' }} />
-                    {area}
+                  'Southern Highlands','Aliante','North Las Vegas','Spring Valley'].map(a => (
+                  <div key={a} className="flex items-center gap-2 text-sm nm-body">
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background:'var(--nm-teal)' }}/>
+                    {a}
                   </div>
                 ))}
               </div>
-              <Link to="/contact" className="nm-btn-cyan">Check If We Serve Your Area →</Link>
+              <Link to="/contact" className="nm-btn-secondary">Check If We Serve You →</Link>
             </motion.div>
 
-            {/* Map card */}
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}>
+            <motion.div initial={{ opacity:0, scale:0.97 }} whileInView={{ opacity:1, scale:1 }}
+              viewport={{ once:true }}>
               <div className="nm-card-lg overflow-hidden">
-                <div className="p-4" style={{ background: 'var(--nm-darker, var(--nm-deep))' }}>
-                  <p className="text-white font-bold text-sm uppercase tracking-wider">
-                    Service Area — Las Vegas Valley
-                  </p>
+                <div className="p-4 pb-0">
+                  <p className="font-semibold text-sm" style={{ color:'var(--nm-muted)' }}>📍 Las Vegas Valley Service Area</p>
                 </div>
-                <div className="h-72">
+                <div className="h-64 m-4 rounded-xl overflow-hidden" style={{ boxShadow:'var(--shadow-inset-sm)' }}>
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d219697.14509837!2d-115.37120!3d36.17497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80beb782a4f57dd1%3A0x3accd5e6d5b379a3!2sLas%20Vegas%2C%20NV!5e0!3m2!1sen!2sus!4v1620000000000"
                     className="w-full h-full border-0" allowFullScreen="" loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade" title="Corwin Pool Service Area"
-                  />
+                    referrerPolicy="no-referrer-when-downgrade" title="Service Area"/>
                 </div>
-                <div className="p-4 nm-inset-sm text-center mx-4 my-3" style={{ borderRadius: '0.5rem' }}>
-                  <p className="text-xs font-bold" style={{ color: 'var(--nm-muted)' }}>
-                    📍 10917 Salford Drive, Las Vegas NV 89144
+                <div className="px-4 pb-4">
+                  <p className="text-xs text-center font-medium" style={{ color:'var(--nm-muted)' }}>
+                    10917 Salford Drive, Las Vegas NV 89144
                   </p>
                 </div>
               </div>
@@ -385,26 +362,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── CTA BANNER ───────────────────────────────────── */}
-      <section className="section-pad" style={{ background: 'var(--nm-deeper)' }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}>
-            <p className="section-label mb-4">Don't Let Your Pool Go Green</p>
-            <h2 className="font-display text-6xl md:text-7xl text-white mb-4 leading-none">
-              READY FOR<br />CRYSTAL CLEAR?
+      {/* ── CTA ─────────────────────────────────────────────── */}
+      <section style={{ background:'var(--nm-blue)' }} className="section-pad">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once:true }}>
+            <p className="text-xs font-semibold tracking-widest2 uppercase mb-4"
+              style={{ color:'rgba(255,255,255,0.6)' }}>Don't Let Your Pool Go Green</p>
+            <h2 className="font-extrabold text-5xl md:text-6xl text-white mb-4" style={{ lineHeight:1.1 }}>
+              Ready for Crystal Clear?
             </h2>
-            <p className="mb-10 text-lg" style={{ color: 'var(--nm-muted)' }}>
+            <p className="text-lg mb-10" style={{ color:'rgba(255,255,255,0.75)' }}>
               Join 500+ Las Vegas families who trust Corwin Pool Service every week.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/book" className="nm-btn-yellow text-lg px-10 py-5">
+              <Link to="/book"
+                className="inline-flex items-center justify-center gap-2 text-base font-semibold px-9 py-4 rounded-xl text-white transition-all hover:opacity-90"
+                style={{ background:'rgba(255,255,255,0.15)', boxShadow:'0 4px 16px rgba(0,0,0,0.15)', backdropFilter:'blur(4px)' }}>
                 Book Your First Service →
               </Link>
-              <a href="tel:7024602406" className="nm-btn-primary text-lg px-10 py-5">
+              <a href="tel:7024602406"
+                className="inline-flex items-center justify-center gap-2 text-base font-semibold px-9 py-4 rounded-xl transition-all hover:opacity-90"
+                style={{ background:'rgba(255,255,255,0.15)', color:'white', boxShadow:'0 4px 16px rgba(0,0,0,0.15)' }}>
                 📞 702-460-2406
               </a>
             </div>
-            <p className="mt-6 text-sm font-semibold" style={{ color: 'var(--nm-muted)' }}>
+            <p className="mt-6 text-sm" style={{ color:'rgba(255,255,255,0.55)' }}>
               Free estimate · No contracts · Cancel anytime
             </p>
           </motion.div>

@@ -1,54 +1,44 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
         nm: {
-          bg:      '#1a3a6e',
-          dark:    '#0f2440',
-          light:   '#254f9e',
-          surface: '#1e4080',
-          deep:    '#162f5a',
-          deeper:  '#0f2440',
-          cyan:    '#00C4F0',
-          yellow:  '#FFE156',
+          bg:      '#e8f2f7',   // base surface
+          alt:     '#f0f7fb',   // slightly lighter alt sections
+          dark:    '#b8ccd8',   // dark shadow
+          light:   '#ffffff',   // light shadow
+          blue:    '#0077b6',   // primary pool blue
+          teal:    '#00b4d8',   // secondary teal
+          sky:     '#90e0ef',   // light accent
+          navy:    '#0d2a3d',   // heading text / dark footer bg
+          body:    '#3d6070',   // body text
+          muted:   '#7a9fb0',   // muted / placeholder text
+          faint:   '#b0c8d4',   // very faint text / dividers
+          footer:  '#0d2a3d',   // footer background
         },
-        // Keep legacy brand colors used in JSX
-        brand: {
-          blue:       '#004E98',
-          'blue-dark':'#003570',
-          cyan:       '#00C4F0',
-          cream:      '#FFFDF5',
-          black:      '#0D0D0D',
-          yellow:     '#FFE156',
-          'gray-light':'#F4F4F0',
-        }
       },
       fontFamily: {
-        display: ['Bebas Neue', 'Impact', 'sans-serif'],
-        body:    ['Inter', 'system-ui', 'sans-serif'],
+        sans:    ['"DM Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        display: ['"DM Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        body:    ['Inter', '"DM Sans"', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        // Neumorphic shadows — raised
-        'nm':    '6px 6px 14px #0f2440, -6px -6px 14px #254f9e',
-        'nm-sm': '3px 3px 8px #0f2440, -3px -3px 8px #254f9e',
-        'nm-lg': '10px 10px 22px #0f2440, -10px -10px 22px #254f9e',
-        'nm-xl': '14px 14px 30px #0f2440, -14px -14px 30px #254f9e',
-        // Neumorphic shadows — inset (pressed)
-        'nm-inset':    'inset 4px 4px 10px #0f2440, inset -4px -4px 10px #254f9e',
-        'nm-inset-sm': 'inset 2px 2px 6px #0f2440, inset -2px -2px 6px #254f9e',
-        'nm-inset-lg': 'inset 6px 6px 16px #0f2440, inset -6px -6px 16px #254f9e',
-        // Glow accents
-        'nm-cyan':   '6px 6px 14px #0f2440, -6px -6px 14px #254f9e, 0 0 24px rgba(0,196,240,0.15)',
-        'nm-yellow': '6px 6px 14px #0f2440, -6px -6px 14px #254f9e, 0 0 24px rgba(255,225,86,0.12)',
+        // Raised neumorphic
+        'nm':    '7px 7px 15px #b8ccd8, -7px -7px 15px #ffffff',
+        'nm-sm': '4px 4px 9px #b8ccd8, -4px -4px 9px #ffffff',
+        'nm-lg': '12px 12px 24px #b8ccd8, -12px -12px 24px #ffffff',
+        'nm-xl': '18px 18px 36px #aac0cc, -18px -18px 36px #ffffff',
+        // Inset neumorphic
+        'nm-inset':    'inset 5px 5px 10px #b8ccd8, inset -5px -5px 10px #ffffff',
+        'nm-inset-sm': 'inset 3px 3px 6px #b8ccd8, inset -3px -3px 6px #ffffff',
+        'nm-inset-lg': 'inset 7px 7px 15px #aac0cc, inset -7px -7px 15px #ffffff',
+        // Blue button (filled, colored shadow)
+        'nm-blue':     '5px 5px 12px #005f94, -5px -5px 12px #0099e0',
+        'nm-blue-sm':  '3px 3px 7px #005f94, -3px -3px 7px #0099e0',
       },
-      letterSpacing: {
-        widest2: '0.2em',
-      },
+      letterSpacing: { widest2: '0.18em' },
     },
   },
   plugins: [],
