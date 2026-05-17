@@ -1,4 +1,4 @@
 {
-  "buildCommand": "",
-  "outputDirectory": "dist",
-  "rewrites": [{ "s
+  "installCommand": "echo skip",
+  "buildCommand": "echo done",
+  "out
